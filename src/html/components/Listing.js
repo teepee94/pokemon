@@ -1,8 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import ListingItem from './ListingItem'
 import "../../resources/sass/components/_components.listing.scss"
+import axios from "../../resources/js/api/Axios"
 
 function Listing(c) {
+
+    const [listingItems, setListingItems] = useState([]);
+
+	useEffect(() => {
+		async function getListingItems() {
+			const request = await axios.get(c.endpoint);
+
+			setListingItems(request.data.results);
+
+			return request;
+		}
+
+		getListingItems();
+	}, [])
+
+    console.log(listingItems);
+
   return (
         <div className={`c-listing ${c.class ? c.class : "" }`}>
             <div className="container">
@@ -25,12 +43,9 @@ function Listing(c) {
                 </div> : ""
                 }
                 <div className="row">
-                    <ListingItem title="Blog title would go here" image="placeholder.png" />
-                    <ListingItem title="Blog title would go here" image="placeholder.png" />
-                    <ListingItem title="Blog title would go here" image="placeholder.png" />
-                    <ListingItem title="Blog title would go here" image="placeholder.png" />
-                    <ListingItem title="Blog title would go here" image="placeholder.png" />
-                    <ListingItem title="Blog title would go here" image="placeholder.png" />
+                    {listingItems.map((listingItem, index) => (
+                        <ListingItem key={listingItem.index} title={listingItem.name} image={listingItem.url.split('/')[listingItem.url.split('/').length - 2]} />
+                    ))}
                 </div>
             </div>
         </div>

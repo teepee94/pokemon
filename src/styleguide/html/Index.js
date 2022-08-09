@@ -19,7 +19,7 @@ function Index(c) {
                 <div className="style-section">
                     <h2 className="heading-h1">Templates</h2>
                     <ul style={{marginTop: "20px"}}>
-                        <li><a href="/template-article">Article</a></li>
+                        <li><a href="/pokemon/bulbasaur">Article</a></li>
                         <li><a href="/template-index">Index</a></li>
                         <li><a href="/template-error">Error</a></li>
                         <li><a href="/template-homepage">Homepage</a></li>
@@ -28,7 +28,7 @@ function Index(c) {
                 <div className="style-section">
                     <h2 className="heading-h1">Components</h2>
                     <ul style={{marginTop: "20px"}}>
-                        <li><a href="/component-article">Article</a></li>
+                        <li><a href="/pokemon/bulbasaur">Article</a></li>
                         <li><a href="/component-listing">Listing</a></li>
                         <li><a href="/component-cookiebar">Cookie Bar</a></li>
                         <li><a href="/component-footer">Footer</a></li>

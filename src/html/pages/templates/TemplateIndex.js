@@ -5,6 +5,7 @@ import Footer from '../../components/Footer'
 import Listing from '../../components/Listing'
 import Masthead from '../../components/Masthead'
 import Pagination from '../../components/Pagination'
+import requests from '../../../resources/js/api/Requests'
 
 function TemplateIndex() {
     return (
@@ -15,8 +16,8 @@ function TemplateIndex() {
         <Navbar />
         <main id="main-content">
             <article>
-                <Masthead title="Blog Index" />
-                <Listing />
+                <Masthead title="Index" />
+                <Listing endpoint={requests.pokemon} />
 				<Pagination />
             </article>
         </main>

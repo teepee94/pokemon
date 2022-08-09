@@ -22,8 +22,8 @@ function Navbar() {
 						<div className="c-navbar__links" id="js-navbar-links">
 							<ul className="c-navbar__list">
 								<li className="c-navbar__item c-navbar__item--dropdown">
-									<a href="template-about" className="c-navbar__link">
-										About
+									<a href="template-index" className="c-navbar__link">
+										All Pokemon
 										<ArrowDownIcon />
 									</a>
 									<div className="c-navbar__dropdown">
@@ -38,9 +38,6 @@ function Navbar() {
 										</div>
 									</div>
 								</li>
-								<li className="c-navbar__item"><a href="template-blog-index" className="c-navbar__link is-current">Blog</a></li>
-								<li className="c-navbar__item"><a href="template-team" className="c-navbar__link">Team</a></li>
-								<li className="c-navbar__item"><a href="template-contact" className="c-navbar__link">Contact</a></li>
 							</ul>
 						</div>
 						<button className="c-navbar__menu" id="js-navbar-menu-toggle" aria-controls="js-navbar-links">
