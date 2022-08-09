@@ -1,0 +1,38 @@
+﻿// =============================================================================
+// Site CSS
+// =============================================================================
+
+// SASS import
+// -----------------------------------------------------------------------------
+//
+// Purpose: Import all our SASS in a specific order
+//
+//
+// 1. All settings
+// 2. The bootstrap grid
+// 3. All tools
+// 4. All generics
+// 5. All elements
+//
+// -----------------------------------------------------------------------------
+
+// 1
+@import "settings/all";
+
+// 2
+@import "../bootstrap/bootstrap-grid";
+
+// 3
+@import "tools/all";
+
+// 4
+@import "generic/generic.reset";
+
+// 5
+@import "elements/elements.headingspara"; // This has to go first
+@import "elements/elements.links"; // This has to go second
+@import "elements/elements.buttons";
+@import "elements/elements.forms";
+@import "elements/elements.images";
+@import "elements/elements.page";
+@import "elements/elements.selects";

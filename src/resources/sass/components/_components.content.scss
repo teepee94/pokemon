@@ -1,0 +1,47 @@
+// =============================================================================
+// Content
+// =============================================================================
+
+// Content
+// -----------------------------------------------------------------------------
+//
+// Purpose: Content
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+@import "../site.scss";
+
+.c-content {
+    @include component-margins;
+}
+
+.c-content__container {
+    @include make-col-ready();
+    @include make-col(12);
+
+    @include media-breakpoint-up(md) {
+        @include make-col(10);
+        @include make-col-offset(1);
+    }
+
+    @include media-breakpoint-up(xl) {
+        @include make-col(8);
+        @include make-col-offset(2);
+    }
+}
+
+
+// Content Modifiers
+// -----------------------------------------------------------------------------
+//
+// Purpose: Enhances or removes styles from default content
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+// 1

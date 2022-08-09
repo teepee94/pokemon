@@ -1,0 +1,227 @@
+﻿// =============================================================================
+// Colour Settings
+// =============================================================================
+
+// Brand Colours
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the colours used throughout the site
+//
+//
+// 1. Brand colours (always use sequence names for the brand colours e.g. primary, secondary, tertiary, quaternary, quinary, senary, septenary, octonary, nonary)
+// 1. We don't want any colours specified by name apart from - black, white & grey (light/dark variations are fine)
+// 2. Other global colours
+// 3. Social brand colours
+//
+// -----------------------------------------------------------------------------
+
+// 1
+$color-black:                                           #000000;
+$color-brand-primary:                                   #0065F2;
+$color-brand-secondary:                                 #001C42;
+$color-grey:                                            #767676;
+$color-grey-dark:                                       #3d3d3d;
+$color-grey-light:                                      #cccccc;
+$color-white:                                           #ffffff;
+
+// 2
+$color-validation-error:                                #E00000;
+$color-validation-success:                              #008000;
+
+// 3
+$color-social-facebook:                                 #3b5998;
+$color-social-twitter:                                  #1da1f2;
+$color-social-linkedin:                                 #0077b5;
+$color-social-instagram:                                #405de6;
+$color-social-youtube:                                  #cd201f;
+$color-social-pinterest:                                #bd081c;
+
+
+// Page
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the global page level colours
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+$color-page-bg:                                         $color-white;
+$color-page-focus-outline:                              #EE34D2;
+$color-page-text:                                       $color-black;
+$color-page-text-selection-bg:                          $color-black;
+$color-page-text-selection-text:                        $color-white;
+
+
+// Article
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the article colours
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+
+// Buttons
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the button colours
+//
+//
+// 1. Default Button
+// 2. Primary coloured button
+//
+// -----------------------------------------------------------------------------
+
+// 1
+$color-btn-bg:                                        	transparent;
+$color-btn-border:                                      $color-black;
+$color-btn-hover-bg:                                    $color-black;
+$color-btn-hover-border:                                transparent;
+$color-btn-hover-text:                                  $color-white;
+$color-btn-text:                                        $color-black;
+
+// 2
+$color-btn-primary-bg:                                  $color-brand-primary;
+$color-btn-primary-border:                              $color-brand-primary;
+$color-btn-primary-hover-bg:                            rgba($color-brand-primary, 0.2);
+$color-btn-primary-hover-border:                        transparent;
+$color-btn-primary-hover-text:                          $color-brand-primary;
+$color-btn-primary-text:                                $color-white;
+
+
+// Cookie Bar
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the cookie bar colours
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+$color-cookiebar-bg:                                    #eee;
+$color-cookiebar-text:                                  $color-brand-primary;
+
+
+// Footer
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the footer colours
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+$color-footer-bg:                                       $color-white;
+$color-footer-text:                                     $color-black;
+
+
+// Forms
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the form colours
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+$color-form-checkbox-label-link-text:                   $color-black;
+$color-form-input-bg:                                   rgba($color-black, 0.075);
+$color-form-input-border:                               transparent;
+$color-form-input-focus:                                $color-black;
+$color-form-input-placeholder:                          rgba($color-black, 0.6);
+$color-form-input-radio-border:                         rgba($color-black, 0.3);
+$color-form-input-text:                                 $color-black;
+$color-form-validation-bg-error:                        rgba($color-validation-error, 0.02);
+$color-form-validation-border-error:                    $color-validation-error;
+$color-form-validation-text-error:                      $color-validation-error;
+$color-form-validation-bg-success:                      rgba($color-validation-success, 0.02);
+$color-form-validation-border-success:                  $color-validation-success;
+$color-form-validation-text-success:                    $color-validation-success;
+
+
+// Listing
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the isting colours
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+$color-listing-filtered-border:					        $color-brand-primary;
+
+
+// Masthead
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the masthead colours
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+$color-masthead-bg:                                     transparent;
+$color-masthead-text:                                   $color-black;
+
+
+// Navbar
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the navbar colours
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+$color-navbar-bg:                                       rgba($color-white, 0.8);
+$color-navbar-dropdown-desktop-bg:                      $color-brand-primary;
+$color-navbar-dropdown-desktop-text:                    $color-white;
+$color-navbar-links-bg:                                 $color-brand-primary;
+$color-navbar-links-text:                               $color-white;
+$color-navbar-text:                                     $color-black;
+
+
+// Pagination
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the pagination component colours
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+
+// Profile
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the profile component colours
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+
+// Selects
+// -----------------------------------------------------------------------------
+//
+// Purpose: All the select (dropdown) colours
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+$color-select-option-bg:                                $color-white;
+$color-select-text:                                     $color-black;

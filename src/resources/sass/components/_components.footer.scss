@@ -1,0 +1,148 @@
+// =============================================================================
+// Footer
+// =============================================================================
+
+// Global Footer
+// -----------------------------------------------------------------------------
+//
+// Purpose: Always sits at the bottom of each page
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+@import "../site.scss";
+
+.c-footer {
+    @include component-margins-bottom;
+    background-color: $color-footer-bg;
+    color: $color-footer-text;
+}
+
+.c-footer__logo-container {
+    @include make-col-ready;
+    @include make-col(12);
+
+    @include media-breakpoint-up(xl) {
+        @include make-col(2.4);
+    }
+}
+
+.c-footer__logo-link {
+    display: inline-block;
+    transition: opacity 0.3s;
+
+    html.no-touchevents &:hover {
+        opacity: 0.7;
+    }
+}
+
+.c-footer__logo {
+    width: $unit*15;
+}
+
+.c-footer__col {
+    @include make-col-ready;
+    @include make-col(6);
+    margin-top: $unit*2;
+
+    @include media-breakpoint-up(md) {
+        @include make-col(3);
+        margin-top: $unit*3;
+    }
+
+    @include media-breakpoint-up(xl) {
+        @include make-col(2.4);
+        margin-top: 0;
+    }
+}
+
+.c-footer__menu-item-link {
+    @include anchor;
+    @include para;
+    color: currentColor;
+}
+
+.c-footer__social-items {
+    display: flex;
+    margin-top: $unit*2;
+}
+
+.c-footer__social-item {
+    transition: opacity 0.3s;
+
+    &:not(:first-of-type) {
+        margin-left: $unit*2;
+    }
+
+    html.no-touchevents &:hover {
+        opacity: 0.7;
+    }
+}
+
+.c-footer__social-item-link {
+    svg {
+        height: $unit*3;
+        width: $unit*3;
+    
+        path {
+            fill: currentColor;
+        }
+    }
+}
+
+.c-footer__legal {
+    @include make-col-ready;
+    @include make-col(12);
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    margin-top: $unit*2;
+
+    @include media-breakpoint-up(md) {
+        margin-top: $unit*4;
+    }
+
+    @include media-breakpoint-up(md) {
+        flex-direction: row;
+    }
+}
+
+.c-footer__copyright {
+    @include para-small;
+    margin-top: $unit;
+
+    @include media-breakpoint-up(md) {
+        margin-top: 0;
+    }
+}
+
+.c-footer__legal-items {
+    display: flex;
+}
+
+.c-footer__legal-item {
+    &:not(:last-of-type) {
+        margin-right: $unit*3;
+    }
+}
+
+.c-footer__legal-item-link {
+    @include anchor;
+    @include para-small;
+    color: currentColor;
+}
+
+
+// Footer Modifiers
+// -----------------------------------------------------------------------------
+//
+// Purpose: Enhances or removes styles from default footer
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+// 1

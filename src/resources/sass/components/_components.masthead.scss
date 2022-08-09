@@ -1,0 +1,55 @@
+// =============================================================================
+// Mastheads
+// =============================================================================
+
+// Masthead
+// -----------------------------------------------------------------------------
+//
+// Purpose: Standard Masthead
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+@import "../site.scss";
+
+.c-masthead {
+    @include component-margins;
+    background-color: $color-masthead-bg;
+    color: $color-masthead-text;
+}
+
+.c-masthead__container {
+    @include make-col-ready();
+    @include make-col(11);
+
+    @include media-breakpoint-up(md) {
+        @include make-col(8);
+    }
+
+    @include media-breakpoint-up(xl) {
+        @include make-col(6);
+    }
+}
+
+.c-masthead__title {
+    @include heading-h0;
+}
+
+.c-masthead__summary {
+    margin-top: $unit*2;
+}
+
+
+// Masthead Modifiers
+// -----------------------------------------------------------------------------
+//
+// Purpose: Enhances or removes styles from default masthead
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+// 1

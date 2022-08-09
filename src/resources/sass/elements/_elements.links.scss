@@ -1,0 +1,48 @@
+// =============================================================================
+// Links
+// =============================================================================
+
+// Default hyperlink
+// -----------------------------------------------------------------------------
+//
+// Purpose: Default styles for all hyperlinks
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+a {
+    color: $color-page-text;
+    text-decoration: underline;
+
+    html.no-touchevents &:hover {
+        text-decoration: none;
+    }
+}
+
+@mixin anchor($size: 1px) {
+    background-image: linear-gradient(to bottom, currentColor, currentColor);
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    background-size: 0 $size;
+    text-decoration: none;
+    transition: background-size 0.45s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    html.no-touchevents &:hover {
+        background-size: 100% $size;
+    }
+}
+
+@mixin anchor-reverse($size: 1px) {
+    background-image: linear-gradient(to bottom, currentColor, currentColor);
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-size: 100% $size;
+    text-decoration: none;
+    transition: background-size 0.45s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    html.no-touchevents &:hover {
+        background-size: 0 $size;
+    }
+}

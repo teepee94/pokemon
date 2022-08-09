@@ -1,0 +1,130 @@
+﻿@use "sass:math";
+// =============================================================================
+// Useful Utilities
+// =============================================================================
+
+// Aspect Ratio
+// -----------------------------------------------------------------------------
+//
+// Purpose: Maintain aspect ratio e.g. 16/9, 4/3
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+@mixin aspect-ratio($width, $height) {
+    display: block;
+    overflow: hidden;
+    position: relative;
+
+    &:before {
+        display: block;
+        content: "";
+        padding-top: math.div($height, $width) * 100%;
+        width: 100%;
+    }
+
+    > * {
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
+    }
+}
+
+
+// Centering
+// -----------------------------------------------------------------------------
+//
+// Purpose: Center an element
+//
+//
+// 1. Vertical
+// 2. Horizontal
+// 3. Both
+//
+// -----------------------------------------------------------------------------
+
+@mixin center($position) {
+    position: absolute;
+
+    // 1
+    @if $position == 'vertical' {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+        // 2
+    @else if $position == 'horizontal' {
+        left: 50%;
+        transform: translate(-50%);
+    }
+        // 3
+    @else if $position == 'both' {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+
+// Font Size
+// -----------------------------------------------------------------------------
+//
+// Purpose: REM Font size with pixel fallback
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+@mixin font-size($sizeValue) {
+    font-size: ($sizeValue * 10) + px;
+    font-size: $sizeValue + rem;
+}
+
+
+// Hiding
+// -----------------------------------------------------------------------------
+//
+// Purpose: Useful mixins for hiding text & elements visually, but not from the DOM
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+@mixin visually-hide() {
+    clip: rect(0 0 0 0);
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.u-visually-hide {
+    @include visually-hide;
+}
+
+
+// Hocus
+// -----------------------------------------------------------------------------
+//
+// Purpose: Generate ':hover' and ':focus' styles in one go
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+@mixin hocus() {
+    &:hover,
+    &:focus {
+        @content;
+    }
+}

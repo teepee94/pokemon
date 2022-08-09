@@ -1,0 +1,62 @@
+// =============================================================================
+// Buttons
+// =============================================================================
+
+// Button
+// -----------------------------------------------------------------------------
+//
+// Purpose: Button variations
+//
+//
+// 1. Optional svg icon
+//
+// -----------------------------------------------------------------------------
+
+.c-btn {
+    @include para;
+    background-color: $color-btn-bg;
+    border: solid 1px $color-btn-border;
+    border-radius: 0;
+    color: $color-btn-text;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+    line-height: 100%;
+    margin: 0;
+    padding: $unit*1.5;
+    text-decoration: none;
+    transition: background-color 0.3s, border 0.3s, color 0.3s;
+
+    @include media-breakpoint-up(lg) {
+        padding: $unit*2;
+    }
+
+    html.no-touchevents &:hover {
+        background-color: $color-btn-hover-bg;
+        border-color: $color-btn-hover-border;
+        color: $color-btn-hover-text;
+    }
+}
+
+// Button Modifiers
+// -----------------------------------------------------------------------------
+//
+// Purpose: Enhances or removes styles from default buttons
+//
+//
+// 1. Button using the primary brand colours
+//
+// -----------------------------------------------------------------------------
+
+// 1
+.c-btn--primary {
+    background-color: $color-btn-primary-bg;
+    border-color: $color-btn-primary-border;
+    color: $color-btn-primary-text;
+
+    html.no-touchevents &:hover {
+        background-color: $color-btn-primary-hover-bg;
+        border-color: $color-btn-primary-hover-border;
+        color: $color-btn-primary-hover-text;
+    }
+}

@@ -1,0 +1,63 @@
+﻿// =============================================================================
+// Variables
+// =============================================================================
+
+// Grid Settings
+// -----------------------------------------------------------------------------
+//
+// Purpose: Other bootstrap grid settings
+//
+//
+// 1. Amount of grid columns
+// 2. The base grid gutter width
+// 3. Whether to add the grid classes to the CSS output
+//
+// -----------------------------------------------------------------------------
+
+$grid-columns:                                          12; // 1
+$grid-gutter-width-base:                                20px; // 2
+$enable-grid-classes:                                   false; // 3
+
+
+// Grid Breakpoints, Containers & Gutter Widths
+// -----------------------------------------------------------------------------
+//
+// Purpose: Bootstrap grid breakpoints, container max widths & gutter widths.
+//
+//
+// 1. Extra small screen / phone
+// 2. Small screen / phone - container max width is set to none so the container is 100% width
+// 3. Small - Medium screen / large phone / small tablet
+// 4. Medium screen / tablet
+// 5. Large screen / desktop
+// 6. Extra large screen / wide desktop
+// 7. Extra extra large screen / extra wide desktop
+//
+// -----------------------------------------------------------------------------
+
+$grid-breakpoints: (
+    xxs: 0, // 1
+    xs: 375px, // 2
+    sm: 550px, // 3
+    md: 768px, // 4
+    lg: 992px, // 5
+    xl: 1200px, // 6
+    xxl: 1400px // 7
+);
+
+$container-max-widths: (
+    md: 748px, // 4
+    lg: 940px, // 5
+    xl: 1140px, // 6
+    xxl: 1340px // 7
+);
+
+$grid-gutter-widths: (
+    xxs: 10px, // 1
+    xs: 10px, // 2
+    sm: 10px, // 3
+    md: $grid-gutter-width-base, // 4
+    lg: $grid-gutter-width-base, // 5
+    xl: $grid-gutter-width-base, // 6
+    xxl: $grid-gutter-width-base // 7
+);

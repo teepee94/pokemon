@@ -1,0 +1,146 @@
+// =============================================================================
+// Spacing
+// =============================================================================
+
+// Spacing Unit
+// -----------------------------------------------------------------------------
+//
+// Purpose: Set spacing units which can then be re-used to keep spacing consistent
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+$unit:  10px;
+
+
+// Component Margins & Padding
+// -----------------------------------------------------------------------------
+//
+// Purpose: Setting the component margins & padding globally so it can be easily changed in 1 place
+//
+//
+// 1. Extra small screen / phone
+// 2. Small screen / phone - container max width is set to none so the container is 100% width
+// 3. Small - Medium screen / large phone / small tablet
+// 4. Medium screen / tablet
+// 5. Large screen / desktop
+// 6. Extra large screen / wide desktop
+// 7. Extra extra large screen / extra wide desktop
+//
+// -----------------------------------------------------------------------------
+
+$component-spacing: (
+    xxs: $unit*4, // 1
+    xs: $unit*4, // 2
+    sm: $unit*4, // 3
+    md: $unit*6, // 4
+    lg: $unit*6, // 5
+    xl: $unit*8, // 6
+    xxl: $unit*8 // 7
+);
+
+@mixin component-margins($modifier: 1) {
+    @each $breakpoint in map-keys($component-spacing) {
+        @include media-breakpoint-up($breakpoint) {
+            $spacing: map-get($component-spacing, $breakpoint);
+            margin-bottom: $spacing*$modifier;
+            margin-top: $spacing*$modifier;
+        }
+    }
+}
+
+@mixin component-margins-bottom($modifier: 1) {
+    @each $breakpoint in map-keys($component-spacing) {
+        @include media-breakpoint-up($breakpoint) {
+            $spacing: map-get($component-spacing, $breakpoint);
+            margin-bottom: $spacing*$modifier;
+        }
+    }
+}
+
+@mixin component-margins-top($modifier: 1) {
+    @each $breakpoint in map-keys($component-spacing) {
+        @include media-breakpoint-up($breakpoint) {
+            $spacing: map-get($component-spacing, $breakpoint);
+            margin-top: $spacing*$modifier;
+        }
+    }
+}
+
+@mixin component-nomargin-bottom() {
+    margin-bottom: 0;
+
+    @include media-breakpoint-up(md) {
+        margin-bottom: 0;
+    }
+}
+
+.u-component-nomargin-bottom {
+    margin-bottom: 0 !important;
+}
+
+@mixin component-nomargin-top() {
+    margin-top: 0;
+
+    @include media-breakpoint-up(md) {
+        margin-top: 0;
+    }
+}
+
+.u-component-nomargin-top {
+    margin-top: 0 !important;
+}
+
+@mixin component-padding($modifier: 1) {
+    @each $breakpoint in map-keys($component-spacing) {
+        @include media-breakpoint-up($breakpoint) {
+            $spacing: map-get($component-spacing, $breakpoint);
+            padding-bottom: $spacing*$modifier;
+            padding-top: $spacing*$modifier;
+        }
+    }
+}
+
+@mixin component-padding-bottom($modifier: 1) {
+    @each $breakpoint in map-keys($component-spacing) {
+        @include media-breakpoint-up($breakpoint) {
+            $spacing: map-get($component-spacing, $breakpoint);
+            padding-bottom: $spacing*$modifier;
+        }
+    }
+}
+
+@mixin component-padding-top($modifier: 1) {
+    @each $breakpoint in map-keys($component-spacing) {
+        @include media-breakpoint-up($breakpoint) {
+            $spacing: map-get($component-spacing, $breakpoint);
+            padding-top: $spacing*$modifier;
+        }
+    }
+}
+
+@mixin component-nopadding-bottom() {
+    padding-bottom: 0;
+
+    @include media-breakpoint-up(md) {
+        padding-bottom: 0;
+    }
+}
+
+.u-component-nopadding-bottom {
+    padding-bottom: 0 !important;
+}
+
+@mixin component-nopadding-top() {
+    padding-top: 0;
+
+    @include media-breakpoint-up(md) {
+        padding-top: 0;
+    }
+}
+
+.u-component-nopadding-top {
+    padding-top: 0 !important;
+}

@@ -1,0 +1,495 @@
+// =============================================================================
+// Forms
+// =============================================================================
+
+// Form
+// -----------------------------------------------------------------------------
+//
+// Purpose: Global form styles, the idea is to keep a consistent style across all forms.
+// A separate class is used per form to define the column layout (see next block)
+//
+//
+// 1. Hide the overall form legend
+//
+// -----------------------------------------------------------------------------
+
+.c-form {
+}
+
+// 1
+.c-form__legend {
+    display: none;
+}
+
+@mixin form-label {
+    @include para-small;
+    display: block;
+    font-weight: 700;
+    margin-bottom: $unit;
+}
+
+.c-form__label {
+    @include form-label;
+}
+
+.c-form__subheading {
+    @include form-label;
+}
+
+
+// Form Textbox
+// -----------------------------------------------------------------------------
+//
+// Purpose: Styles for textbox elements
+//
+//
+// 1. Element wrapped around each textbox field and label
+// 2. Textbox validation error
+// 3. Textbox valid
+// 4. Textbox hover/focus
+//
+// -----------------------------------------------------------------------------
+
+// 1
+.c-form__textbox-field {
+
+}
+
+@mixin form-textbox {
+    @include para;
+    background-color: $color-form-input-bg;
+    border: none;
+    border-bottom: 1px solid $color-form-input-border;
+    border-radius: 0;
+    color: $color-form-input-text;
+    line-height: 100%;
+    height: 100%;
+    outline: none;
+    padding: $unit;
+    transition: border 0.3s;
+    width: 100%;
+
+    @include media-breakpoint-up(lg) {
+        padding: $unit*2;
+    }
+
+    &::placeholder {
+        color: $color-form-input-placeholder;
+    }
+
+    // 2
+    &.error {
+        border-color: $color-form-validation-border-error;
+    }
+
+    // 3
+    &.valid {
+        border-color: $color-form-validation-border-success;
+    }
+
+    // 4
+    @include hocus {
+        border-color: $color-form-input-focus !important;
+        outline: none;
+    }
+}
+
+.c-form__textbox {
+    @include form-textbox;
+}
+
+
+// Form Textarea
+// -----------------------------------------------------------------------------
+//
+// Purpose: Styles for textarea elements
+//
+//
+// 1. Element wrapped around each textarea field and label
+// 2. Textarea validation error
+// 3. Textbox valid
+// 4. Textbox hover/focus
+//
+// -----------------------------------------------------------------------------
+
+// 1
+.c-form__textarea-field {
+
+}
+
+@mixin form-textarea {
+    @include para;
+    background-color: $color-form-input-bg;
+    border: none;
+    border-bottom: 1px solid $color-form-input-border;
+    border-radius: 0;
+    color: $color-form-input-text;
+    outline: none;
+    padding: $unit;
+    transition: border 0.3s;
+    width: 100%;
+
+    @include media-breakpoint-up(lg) {
+        padding: $unit*2;
+    }
+
+    &::placeholder {
+        color: $color-form-input-placeholder;
+    }
+
+    // 2
+    &.error {
+        border-color: $color-form-validation-border-error;
+    }
+
+    // 3
+    &.valid {
+        border-color: $color-form-validation-border-success;
+    }
+
+    // 4
+    @include hocus {
+        border-color: $color-form-input-focus !important;
+        outline: none;
+    }
+}
+
+.c-form__textarea {
+    @include form-textarea;
+}
+
+
+// Form Checkbox
+// -----------------------------------------------------------------------------
+//
+// Purpose: Styles for checkbox elements
+//
+//
+// 1. Element wrapped around each checkbox field and label
+// 2. Custom checkbox - hiding the default checkbox & using the before/after elements to create a nice looking checkbox
+// 3. Checkbox validation error
+//
+// -----------------------------------------------------------------------------
+
+// 1
+.c-form__checkbox-field {
+    display: inline-block;
+    margin-bottom: $unit;
+    width: 100%;
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+// 2
+.c-form__checkbox {
+    @include visually-hide;
+
+    & + label,
+    & + input + label {
+        cursor: pointer;
+        float: left;
+        margin-bottom: 0;
+        padding-left: $unit*4;
+        padding-top: 2px;
+        position: relative;
+        user-select: none;
+
+        @include media-breakpoint-up(lg) {
+            padding-top: 1px;
+        }
+
+        &::before {
+            border: 1px solid $color-form-input-radio-border;
+            content: "";
+            display: inline-block;
+            height: 25px;
+            left: 0;
+            position: absolute;
+            top: 0;
+            transition: border 0.3s;
+            width: 25px;
+        }
+
+        &::after {
+            background-color: $color-form-input-focus;
+            content: "";
+            display: none;
+            height: 9px;
+            left: 8px;
+            position: absolute;
+            top: 8px;
+            width: 9px;
+        }
+
+        a {
+            @include anchor-reverse;
+            color: currentColor;
+        }
+    }
+
+    &:focus + label, &:hover + label,
+    &:focus + input + label, &:hover + input + label {
+        &::before {
+            border-color: $color-form-input-focus !important;
+        }
+    }
+
+    &:checked + label,
+    &:checked + input + label {
+        &::after {
+            display: block;
+        }
+    }
+}
+
+// 3
+.c-form__checkbox.error {
+    & + label,
+    & + input + label {
+        &::before {
+            border-color: $color-form-validation-border-error !important;
+        }
+    }
+}
+
+
+// Form Radio
+// -----------------------------------------------------------------------------
+//
+// Purpose: Styles for radio elements
+//
+//
+// 1. Element wrapped around each radio field and label
+// 2. Custom radio - hiding the default radio & using the before/after elements to create a nice looking radio
+//
+// -----------------------------------------------------------------------------
+
+// 1
+.c-form__radio-field {
+    display: inline-block;
+    margin-bottom: $unit;
+    width: 100%;
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+// 2
+.c-form__radio {
+    @include visually-hide;
+
+    & + label {
+        cursor: pointer;
+        float: left;
+        margin-bottom: 0;
+        padding-left: $unit*4;
+        padding-top: 2px;
+        position: relative;
+        user-select: none;
+
+        @include media-breakpoint-up(lg) {
+            padding-top: 1px;
+        }
+
+        &::before {
+            border: 1px solid $color-form-input-radio-border;
+            border-radius: 50%;
+            content: "";
+            display: inline-block;
+            height: 25px;
+            left: 0;
+            position: absolute;
+            top: 0;
+            transition: border 0.3s;
+            width: 25px;
+        }
+
+        &::after {
+            background-color: $color-form-input-focus;
+            border-radius: 50%;
+            content: "";
+            display: none;
+            height: 9px;
+            left: 8px;
+            position: absolute;
+            top: 8px;
+            width: 9px;
+        }
+
+        a {
+            color: currentColor;
+        }
+    }
+
+    &:focus + label {
+        &::before {
+            border-color: $color-form-input-focus;
+        }
+    }
+
+    &:hover + label {
+        &::before {
+            border-color: $color-form-input-focus;
+        }
+    }
+
+    &:checked + label {
+        &::after {
+            display: block;
+        }
+    }
+}
+
+
+// Form Select
+// -----------------------------------------------------------------------------
+//
+// Purpose: Styles for select elements
+//
+//
+// 1. Element wrapped around each select field and label
+// 2. Lets make sure the selectbox is 100% height & width of its container
+//
+// -----------------------------------------------------------------------------
+
+// 1
+.c-form__select-field {
+    height: 100%; // 2
+
+    .c-form__label {
+        @include visually-hide;
+    }
+
+    .c-selectbox {
+        height: 100%; // 2
+        width: 100%; // 2
+    }
+
+    .c-selectbox__select {
+        height: 100%; // 2
+    }
+}
+
+
+// Form Validation
+// -----------------------------------------------------------------------------
+//
+// Purpose: Styles for form validation
+//
+//
+// 1. Error styling for validation message
+// 2. Success styling for validation message
+//
+// -----------------------------------------------------------------------------
+
+.c-form__validation {
+    :first-child {
+        margin-top: 0;
+    }
+
+    p, ul, ol {
+        margin-top: $unit;
+    }
+
+    ul, ol {
+        @include para;
+
+        li {
+            margin-left: 20px;
+        }
+    }
+
+    ul {
+        list-style-type: disc;
+    }
+
+    ol {
+        list-style-type: decimal;
+    }
+}
+
+// 1
+.c-form__validation--error {
+    background-color: $color-form-validation-bg-error;
+    border: 1px solid $color-form-validation-border-error;
+    color: $color-form-validation-text-error;
+    padding: $unit*2;
+}
+
+// 2
+.c-form__validation--success {
+    background-color: $color-form-validation-bg-success;
+    border: 1px solid $color-form-validation-border-success;
+    color: $color-form-validation-text-success;
+    padding: $unit*2;
+}
+
+
+// Form Layout
+// -----------------------------------------------------------------------------
+//
+// Purpose: Generic form layout
+//
+//
+// 1. Removes margin-bottom from component
+// 2. Removes margin-top from component
+//
+// -----------------------------------------------------------------------------
+
+.c-form--layout {
+    @include component-margins;
+}
+
+// 1
+.c-form--nomargin-bottom {
+    @include component-nomargin-bottom;
+}
+
+// 2
+.c-form--nomargin-top {
+    @include component-nomargin-top;
+}
+
+.c-form__container {
+    @include make-col-ready();
+    @include make-col(12);
+
+    @include media-breakpoint-up(md) {
+        @include make-col(8);
+        @include make-col-offset(2);
+    }
+
+    @include media-breakpoint-up(lg) {
+        @include make-col(6);
+        @include make-col-offset(3);
+    }
+}
+
+.c-form__form-field {
+    @include make-col-ready();
+    @include make-col(12);
+}
+
+.c-form__form-field + .c-form__form-field {
+    margin-top: $unit*2;
+
+    @include media-breakpoint-up(md) {
+        margin-top: $unit*3;
+    }
+}
+
+.c-form__form-validation {
+    @include make-col-ready();
+    @include make-col(12);
+
+    .c-form__validation--error {
+        margin-bottom: $unit*2;
+
+        @include media-breakpoint-up(md) {
+            margin-bottom: $unit*3;
+        }
+    }
+}

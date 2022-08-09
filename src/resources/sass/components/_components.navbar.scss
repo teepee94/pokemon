@@ -1,0 +1,322 @@
+// =============================================================================
+// Navbar
+// =============================================================================
+
+// Top Navigation Bar
+// -----------------------------------------------------------------------------
+//
+// Purpose: Top navigation, that turns into burger navigation on small devices
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+@import "../site.scss";
+
+.c-navbar {
+    backdrop-filter: blur(15px);
+    background-color: $color-navbar-bg;
+    color: $color-navbar-text;
+    padding: $unit 0;
+    left: 0;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: $z-index-4--navbar;
+
+    @include media-breakpoint-up(md) {
+        padding: $unit*2 0;
+    }
+
+    @include media-breakpoint-up(lg) {
+        padding: $unit*3 0;
+    }
+}
+
+.c-navbar__container {
+    @include make-col-ready();
+    @include make-col(12);
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.c-navbar__brand {
+    color: currentColor;
+    position: relative;
+    transition: opacity 0.3s;
+    width: 125px;
+    z-index: $z-index-2--navbar-brand;
+
+    @include media-breakpoint-up(md) {
+        width: 150px;
+    }
+
+    @include media-breakpoint-up(lg) {
+        width: 175px;
+    }
+
+    @include media-breakpoint-up(xl) {
+        width: 200px;
+    }
+
+    html.no-touchevents &:hover {
+        opacity: 0.7;
+    }
+
+    svg {
+        fill: currentColor;
+    }
+}
+
+.c-navbar__links {
+    @include media-breakpoint-down(sm) {
+        background-color: $color-navbar-links-bg;
+        display: none;
+        height: 100vh;
+        left: 0;
+        padding-top: $unit*5;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: $z-index-1--navbar-links;
+    }
+
+    @include media-breakpoint-up(md) {
+        display: inline-block;
+    }
+}
+
+.c-navbar__list {
+    display: flex;
+
+    @include media-breakpoint-down(sm) {
+        flex-direction: column;
+        padding-left: $unit;
+        padding-right: $unit;
+    }
+}
+
+.c-navbar__item {
+    position: relative;
+
+    @include media-breakpoint-down(sm) {
+        padding: $unit 0;
+    }
+}
+
+.c-navbar__item + .c-navbar__item {
+    @include media-breakpoint-up(md) {
+        margin-left: $unit*4;
+    }
+
+    @include media-breakpoint-up(lg) {
+        margin-left: $unit*6;
+    }
+}
+
+.c-navbar__link {
+    @include anchor;
+    @include para;
+    color: currentColor;
+    display: block;
+    font-weight: 500;
+    position: relative;
+
+    svg {
+        @include center(vertical);
+        fill: currentColor;
+        height: $unit*2.5;
+        right: 0;
+        transform-origin: top;
+        width: $unit*2.5;
+    
+        @include media-breakpoint-up(md) {
+            display: none;
+        }
+    }
+}
+
+.c-navbar__menu {
+    color: currentColor;
+    height: $unit*2.5;
+    position: relative;
+    transition: opacity 0.3s, visibility 0.3s;
+    width: $unit*2.5;
+    z-index: $z-index-2--navbar-menu;
+
+    @include media-breakpoint-up(md) {
+        display: none;
+    }
+
+    &::before {
+        background-color: currentColor;
+        content: "";
+        height: 2px;
+        left: 0;
+        position: absolute;
+        top: $unit*0.5;
+        transition: all 0.3s;
+        width: $unit*2.5;
+    }
+
+    &::after {
+        background-color: currentColor;
+        bottom: $unit*0.5;
+        content: "";
+        height: 2px;
+        left: 0;
+        position: absolute;
+        transition: all 0.3s;
+        width: $unit*2.5;
+    }
+}
+
+
+// Dropdown Navigation
+// -----------------------------------------------------------------------------
+//
+// Purpose: Dropdown navigation items
+//
+//
+// 1. Hide the first item in the dropdown nav on touch devices as it's a duplicate of the top level link for touch users to get to the page
+//
+// -----------------------------------------------------------------------------
+
+.c-navbar__dropdown {
+    @include media-breakpoint-down(sm) {
+        display: none;
+        padding: $unit 0;
+    }
+
+    @include media-breakpoint-up(md) {
+        background-color: $color-navbar-dropdown-desktop-bg;
+        position: absolute;
+        opacity: 0;
+        transform: translate3d(0,0,0);
+        transition: opacity 0.3s, visibility 0.3s;
+        visibility: hidden;
+        width: 280px;
+        z-index: $z-index-4--navbar-dropdown;
+    }
+
+    @include media-breakpoint-up(xl) {
+        width: 300px;
+    }
+}
+
+.c-navbar__dropdown-wrapper {
+
+}
+
+.c-navbar__dropdown-list {
+
+}
+
+.c-navbar__dropdown-item {
+    // 1
+    html.no-touchevents & {
+        &:first-of-type {
+            display: none;
+        }
+    }
+}
+
+.c-navbar__dropdown-link {
+    @include font-size(1.6);
+    color: currentColor;
+    display: block;
+    line-height: 140%;
+    padding: $unit;
+    text-decoration: none;
+
+    @include media-breakpoint-up(md) {
+        color: $color-navbar-dropdown-desktop-text;
+    }
+}
+
+
+// Navbar Modifiers
+// -----------------------------------------------------------------------------
+//
+// Purpose: Enhances or removes styles from default navbar
+//
+//
+// 1. The links are hidden by default on small devices & are shown when the burger menu is clicked on
+// 2. Changes the burger menu icon to a close icon when the nav is shown
+// 3. Change the logo, burger & text colour when the nav is open
+// 4. Modifier that is used if 1 of the main nav links has a dropdown - used to add the arrow icon on the small device nav
+// 5. The dropdown is hidden on all devices by default but using different ways of showing (using display on small devices & visibility/opacity on medium devices & above)
+// 6. Link active/current state
+//
+// -----------------------------------------------------------------------------
+
+body.is-nav-open {
+    // 1
+    .c-navbar__links {
+        @include media-breakpoint-down(sm) {
+            display: inline-block;
+        }
+    }
+
+    // 2
+    .c-navbar__menu {
+        &::before {
+            left: 3px;
+            top: 1px;
+            transform: rotate(45deg);
+            transform-origin: top left;
+            width: 30px;
+        }
+
+        &::after {
+            bottom: 1px;
+            left: 2px;
+            transform: rotate(-45deg);
+            transform-origin: top left;
+            width: 30px;
+        }
+    }
+
+    // 3
+    .c-navbar {
+        color: $color-navbar-links-text;
+
+        @include media-breakpoint-up(md) {
+            color: $color-navbar-text;
+        }
+    }
+}
+
+// 4
+.c-navbar__item--dropdown {
+    .c-navbar__link.is-active {
+        .c-navbar__link-dropdown-icon {
+            transform: rotate(-180deg) translateY(-50%);
+        }
+    }
+}
+
+// 5
+.c-navbar__dropdown {
+    html.no-js .c-navbar__item:hover &,
+    html.no-js .c-navbar__item:focus &,
+    &.is-active {
+        @include media-breakpoint-down(sm) {
+            display: block;
+        }
+
+        @include media-breakpoint-up(md) {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+// 6
+.c-navbar__link.is-current, .c-navbar__link.is-active {
+    @include media-breakpoint-up(md) {
+        background-size: 100% 1px;
+    }
+}

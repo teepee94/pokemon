@@ -1,0 +1,85 @@
+// =============================================================================
+// Pagination
+// =============================================================================
+
+// Pagination
+// -----------------------------------------------------------------------------
+//
+// Purpose: Pagination links
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+@import "../site.scss";
+
+.c-pagination {
+    @include component-margins;
+}
+
+.c-pagination__container {
+    @include make-col-ready();
+    @include make-col(12);
+    display: flex;
+    justify-content: center;
+}
+
+.c-pagination__items {
+    align-items: center;
+    display: flex;
+}
+
+.c-pagination__item + .c-pagination__item {
+    margin-left: $unit*0.5;
+
+    @include media-breakpoint-up(md) {
+        margin-left: $unit;
+    }
+}
+
+.c-pagination__link {
+    @include anchor(1px);
+    @include para;
+    display: inline-block;
+    font-weight: bold;
+    line-height: 100%;
+    padding: $unit*1.5;
+    text-decoration: none;
+
+    svg {
+        fill: currentColor;
+        position: relative;
+        top: 1px;
+        width: $unit*1.6;
+    
+        @include media-breakpoint-up(md) {
+            top: 2px;
+            width: $unit*1.7;
+        }
+    
+        @include media-breakpoint-up(xl) {
+            width: $unit*1.8;
+        }
+    }
+}
+
+.c-pagination__link-text {
+    @include visually-hide;
+}
+
+
+// Pagination Modifiers
+// -----------------------------------------------------------------------------
+//
+// Purpose: Enhances or removes styles from default pagination
+//
+//
+// 1. Current state
+//
+// -----------------------------------------------------------------------------
+
+// 1
+.c-pagination__link.is-current {
+    background-size: 100% 1px;
+}

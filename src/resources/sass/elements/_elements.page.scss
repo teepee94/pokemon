@@ -1,0 +1,68 @@
+﻿// =============================================================================
+// Page
+// =============================================================================
+
+// Page level styling
+// -----------------------------------------------------------------------------
+//
+// Purpose: Page level styling
+//
+//
+// 1. This allows us to use em & rem as pixel measurements. E.g. 1.1em equals 11px
+// 2. Body background colour
+// 3. Overall text colour
+// 4. Default font
+// 5. Text selection styles
+// 6. Stops fonts from rendering so bold in FireFox
+// 7. Stop mobile devices from inflating the font size of body copy when in landscape view
+// 8. Skip to content link
+// 9. Focus state outline on all elements apart from certain form elements (as these have their own focus styling)
+//
+// -----------------------------------------------------------------------------
+
+html {
+    font-size: 62.5%; // 1
+    -moz-osx-font-smoothing: grayscale; // 6
+    -webkit-font-smoothing: antialiased;
+    text-size-adjust: none; // 7
+
+    // 5
+    ::-moz-selection {
+        color: $color-page-text-selection-text;
+        background: $color-page-text-selection-bg;
+    }
+
+    ::selection {
+        color: $color-page-text-selection-text;
+        background: $color-page-text-selection-bg;
+    }
+}
+
+body {
+    @include font-helvetica-neue; // 4
+    background-color: $color-page-bg; // 2
+    color: $color-page-text; // 3
+}
+
+// 8
+a[href="#main-content"]{
+    @include para;
+    color: currentColor;
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: $z-index-10--skip-content;
+
+    &:not(:focus) {
+        @include visually-hide;
+    }
+}
+
+// 9
+:focus {
+    outline: $color-page-focus-outline dashed 5px;
+}
+
+.js-focus-visible :focus:not(.focus-visible) {
+    outline: none !important;
+}

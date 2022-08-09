@@ -1,0 +1,68 @@
+// =============================================================================
+// Cookie
+// =============================================================================
+
+// Cookie Bar
+// -----------------------------------------------------------------------------
+//
+// Purpose: If a user has not visited the site before or has cleared their cookies the cookie policy bar will be shown
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+@import "../site.scss";
+
+.c-cookiebar {
+    display: inline-block;
+    background-color: $color-cookiebar-bg;
+    bottom: 0;
+    left: 0;
+    padding: $unit*1.5;
+    position: fixed;
+    width: 100%;
+    z-index: $z-index-4--cookiebar;
+
+    @include media-breakpoint-up(md) {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        padding: $unit*2;
+    }
+}
+
+.c-cookiebar__text {
+    color: $color-cookiebar-text;
+    max-width: 1100px;
+}
+
+.c-cookiebar__link {
+    @include anchor-reverse;
+    color: currentColor;
+}
+
+.c-cookiebar__links {
+    margin-top: $unit;
+    white-space: nowrap;
+
+    @include media-breakpoint-up(md) {
+        margin-left: $unit*2;
+        margin-top: 0;
+    }
+}
+
+// Cookie Bar Modifiers
+// -----------------------------------------------------------------------------
+//
+// Purpose: Enhances or removes styles from default cookie bar
+//
+//
+// 1. Hide the cookie bar
+//
+// -----------------------------------------------------------------------------
+
+// 1
+.c-cookiebar--hidden {
+    display: none !important;
+}
