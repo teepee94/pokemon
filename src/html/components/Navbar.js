@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import ArrowDownIcon from "../../resources/icons/ArrowDownIcon"
 import { FENavbar } from "../../resources/js/NavbarFe"
 import "../../resources/sass/components/_components.navbar.scss"
+import SearchIcon from "../../resources/icons/SearchIcon"
+import UserIcon from "../../resources/icons/UserIcon"
 
 function Navbar() {
 
@@ -16,13 +18,13 @@ function Navbar() {
 			<div className="container">
 				<div className="row">
 					<div className="c-navbar__container">
-						<a href="template-homepage" className="c-navbar__brand">
+						<a href="/" className="c-navbar__brand">
 							<img src="/resources/images/logo.png" alt="logo" />
 						</a>
 						<div className="c-navbar__links" id="js-navbar-links">
 							<ul className="c-navbar__list">
 								<li className="c-navbar__item c-navbar__item--dropdown">
-									<a href="template-index" className="c-navbar__link">
+									<a href="/pokemon" className="c-navbar__link">
 										All Pokemon
 										<ArrowDownIcon />
 									</a>
@@ -37,6 +39,18 @@ function Navbar() {
 											</ul>
 										</div>
 									</div>
+								</li>
+								<li className="c-navbar__item c-navbar__item--dropdown">
+									<a href="/pokemon" className="c-navbar__link">
+										Compare
+									</a>
+								</li>
+								<li className="c-navbar__item c-navbar__item--dropdown">
+									<a href="/" className="c-navbar__link">
+										<div className="c-navbar__link-icon">
+											<UserIcon />
+										</div>
+									</a>
 								</li>
 							</ul>
 						</div>

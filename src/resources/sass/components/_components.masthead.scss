@@ -15,20 +15,19 @@
 @import "../site.scss";
 
 .c-masthead {
-    @include component-margins;
+    @include component-margins(2);
     background-color: $color-masthead-bg;
     color: $color-masthead-text;
 }
 
 .c-masthead__container {
     @include make-col-ready();
-    @include make-col(11);
+    @include make-col(12);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 
     @include media-breakpoint-up(md) {
-        @include make-col(8);
-    }
-
-    @include media-breakpoint-up(xl) {
         @include make-col(6);
     }
 }
@@ -39,8 +38,28 @@
 
 .c-masthead__summary {
     margin-top: $unit*2;
+    width: 75%;
 }
 
+.c-masthead__btn.c-btn {
+    margin-top: $unit*2;
+    width: fit-content;
+}
+
+.c-masthead__media-container {
+    @include make-col-ready();
+    @include make-col(12);
+
+    @include media-breakpoint-up(md) {
+        @include make-col(6);
+    }
+}
+
+.c-masthead__media {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
 
 // Masthead Modifiers
 // -----------------------------------------------------------------------------
@@ -53,3 +72,22 @@
 // -----------------------------------------------------------------------------
 
 // 1
+.c-masthead--media {
+    @include component-margins-bottom;
+    @include component-nomargin-top;
+    @include component-padding(2.5);
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+
+    &:before {
+        @include center(horizontal);
+        background-color: $color-brand-tertiary;
+        content: "";
+        height: 150%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        transform: rotate(10deg);
+    }
+}

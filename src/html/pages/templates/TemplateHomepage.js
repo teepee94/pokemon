@@ -1,8 +1,8 @@
 import React from 'react'
 import { Helmet } from "react-helmet"
 import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
 import Masthead from '../../components/Masthead'
+import Footer from '../../components/Footer'
 
 function TemplateHomepage() {
 	return (
@@ -13,7 +13,7 @@ function TemplateHomepage() {
 		<Navbar />
 		<main id="main-content">
 			<article>
-				<Masthead title="Page title would go here lorem ipsum" summary="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque hendrerit purus ex, eget molestie quam rutrum vitae. In egestas faucibus magna, vel malesuada mi tempor a." />
+				<Masthead class="c-masthead--media" title="Gotta Catch 'Em All!" image="https://www.freepnglogos.com/uploads/pokemon-png/ash-and-pikachu-dashiesparkle-pokemon-png-29.png" link="/pokemon" linktext="View Pokémon" summary="Pokémon is a Japanese media franchise managed by The Pokémon Company, a company founded by Nintendo, Game Freak, and Creatures." />
 			</article>
 		</main>
 		<Footer />

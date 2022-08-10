@@ -17,7 +17,7 @@ function TemplateIndex() {
         <main id="main-content">
             <article>
                 <Masthead title="Index" />
-                <Listing endpoint={requests.pokemon} />
+                <Listing endpoint={requests.pokemon} header="Filtered By:" />
 				<Pagination />
             </article>
         </main>

@@ -9,8 +9,7 @@
 //
 //
 // 1. On small devices we want a top margin on all items apart from the first 2
-// 2. On tablet & desktop devices we want a top margin on all items apart from the top 4
-// 3. On extra large devices we want a top margin on all items apart from the top 6
+// 2. On tablet & desktop devices we want a top margin on all items apart from the top 5
 //
 // -----------------------------------------------------------------------------
 
@@ -68,7 +67,7 @@
 
 .c-listing__header {
     @include make-col-ready();
-    @include make-col(6);
+    @include make-col(12);
     align-items: center;
     display: flex;
     justify-content: space-between;
@@ -93,11 +92,7 @@
     @include make-col(6);
 
     @include media-breakpoint-up(md) {
-        @include make-col(3);
-    }
-
-    @include media-breakpoint-up(xxl) {
-        @include make-col(2);
+        @include make-col(2.4);
     }
 
     // 1
@@ -108,15 +103,8 @@
     }
 
     // 2
-    &:nth-of-type(n+5) {
-        @include media-breakpoint-between(md, xl) {
-            margin-top: $unit*4;
-        }
-    }
-
-    // 3
-    &:nth-of-type(n+7) {
-        @include media-breakpoint-up(xxl) {
+    &:nth-of-type(n+6) {
+        @include media-breakpoint-up(md) {
             margin-top: $unit*4;
         }
     }
@@ -125,6 +113,7 @@
 .c-listing__item-link {
     display: block;
     text-decoration: none;
+    text-align: center;
 
     html.no-touchevents &:hover {
         .c-listing__item-title {
@@ -138,20 +127,19 @@
 }
 
 .c-listing__item-media {
-    height: auto;
-    object-fit: cover;
+    height: 100%;
+    object-fit: contain;
     width: 100%;
 }
 
 .c-listing__item-title {
     @include anchor(2px);
-    @include heading-h3;
+    @include heading-h4;
     display: inline-block;
-    margin-top: $unit;
-}
 
-.c-listing__item-summary {
-    margin-top: $unit;
+    @include media-breakpoint-up(xl) {
+        @include heading-h3;
+    }
 }
 
 

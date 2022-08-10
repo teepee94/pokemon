@@ -17,8 +17,9 @@
 
 // 1
 $color-black:                                           #000000;
-$color-brand-primary:                                   #0065F2;
-$color-brand-secondary:                                 #001C42;
+$color-brand-primary:                                   #3663AD;
+$color-brand-secondary:                                 #FFCB05;
+$color-brand-tertiary:                                  #B8C370;
 $color-grey:                                            #767676;
 $color-grey-dark:                                       #3d3d3d;
 $color-grey-light:                                      #cccccc;
@@ -77,19 +78,19 @@ $color-page-text-selection-text:                        $color-white;
 // -----------------------------------------------------------------------------
 
 // 1
-$color-btn-bg:                                        	transparent;
+$color-btn-bg:                                        	$color-black;
 $color-btn-border:                                      $color-black;
-$color-btn-hover-bg:                                    $color-black;
+$color-btn-hover-bg:                                    $color-brand-primary;
 $color-btn-hover-border:                                transparent;
 $color-btn-hover-text:                                  $color-white;
-$color-btn-text:                                        $color-black;
+$color-btn-text:                                        $color-white;
 
 // 2
 $color-btn-primary-bg:                                  $color-brand-primary;
 $color-btn-primary-border:                              $color-brand-primary;
-$color-btn-primary-hover-bg:                            rgba($color-brand-primary, 0.2);
+$color-btn-primary-hover-bg:                            $color-black;
 $color-btn-primary-hover-border:                        transparent;
-$color-btn-primary-hover-text:                          $color-brand-primary;
+$color-btn-primary-hover-text:                          $color-white;
 $color-btn-primary-text:                                $color-white;
 
 
@@ -183,7 +184,7 @@ $color-masthead-text:                                   $color-black;
 //
 // -----------------------------------------------------------------------------
 
-$color-navbar-bg:                                       rgba($color-white, 0.8);
+$color-navbar-bg:                                       transparent;
 $color-navbar-dropdown-desktop-bg:                      $color-brand-primary;
 $color-navbar-dropdown-desktop-text:                    $color-white;
 $color-navbar-links-bg:                                 $color-brand-primary;

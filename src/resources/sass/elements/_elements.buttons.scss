@@ -16,19 +16,19 @@
     @include para;
     background-color: $color-btn-bg;
     border: solid 1px $color-btn-border;
-    border-radius: 0;
+    border-radius: 40px;
     color: $color-btn-text;
     cursor: pointer;
     display: inline-block;
     font-weight: 500;
     line-height: 100%;
     margin: 0;
-    padding: $unit*1.5;
+    padding: $unit $unit*1.5;
     text-decoration: none;
     transition: background-color 0.3s, border 0.3s, color 0.3s;
 
     @include media-breakpoint-up(lg) {
-        padding: $unit*2;
+        padding: $unit*1.5 $unit*2;
     }
 
     html.no-touchevents &:hover {

@@ -15,12 +15,11 @@
 @import "../site.scss";
 
 .c-navbar {
-    backdrop-filter: blur(15px);
     background-color: $color-navbar-bg;
     color: $color-navbar-text;
     padding: $unit 0;
     left: 0;
-    position: sticky;
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: $z-index-4--navbar;
@@ -134,6 +133,14 @@
     
         @include media-breakpoint-up(md) {
             display: none;
+        }
+    }
+}
+
+.c-navbar__link-icon {
+    svg {
+        @include media-breakpoint-up(md) {
+            display: block;
         }
     }
 }
