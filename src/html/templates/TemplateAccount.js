@@ -1,7 +1,8 @@
 import React from 'react'
 import { Helmet } from "react-helmet"
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
+import Navbar from '../components/Navbar'
+import Masthead from '../components/Masthead'
+import Profile from "../components/Profile"
 
 function TemplateAccount() {
     return (
@@ -12,10 +13,10 @@ function TemplateAccount() {
         <Navbar />
         <main id="main-content">
             <article id="js-blog-article-content">
-                <div>Profile component would go here</div>
+                <Masthead title="Account" />
+                <Profile />
             </article>
         </main>
-        <Footer />
         </>
     )
 }

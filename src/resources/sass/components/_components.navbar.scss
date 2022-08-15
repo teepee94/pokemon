@@ -17,8 +17,8 @@
 .c-navbar {
     background-color: $color-navbar-bg;
     color: $color-navbar-text;
-    padding: $unit 0;
     left: 0;
+    padding: $unit 0;
     position: fixed;
     top: 0;
     width: 100%;
@@ -88,6 +88,7 @@
 }
 
 .c-navbar__list {
+    align-items: center;
     display: flex;
 
     @include media-breakpoint-down(sm) {
@@ -107,11 +108,11 @@
 
 .c-navbar__item + .c-navbar__item {
     @include media-breakpoint-up(md) {
-        margin-left: $unit*4;
+        margin-left: $unit*2;
     }
 
-    @include media-breakpoint-up(lg) {
-        margin-left: $unit*6;
+    @include media-breakpoint-up(xl) {
+        margin-left: $unit*4;
     }
 }
 
@@ -199,8 +200,8 @@
 
     @include media-breakpoint-up(md) {
         background-color: $color-navbar-dropdown-desktop-bg;
-        position: absolute;
         opacity: 0;
+        position: absolute;
         transform: translate3d(0,0,0);
         transition: opacity 0.3s, visibility 0.3s;
         visibility: hidden;
@@ -326,4 +327,8 @@ body.is-nav-open {
     @include media-breakpoint-up(md) {
         background-size: 100% 1px;
     }
+}
+
+.c-navbar.is-sticky {
+    background-color: $color-brand-primary;
 }

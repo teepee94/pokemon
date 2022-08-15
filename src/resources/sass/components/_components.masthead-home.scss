@@ -1,0 +1,96 @@
+// =============================================================================
+// Masthead Home
+// =============================================================================
+//
+// Purpose: Used on as homepage header
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+@import "../site.scss";
+
+.c-masthead-home {
+    @include component-margins(2);
+    background-color: $color-masthead-bg;
+    color: $color-masthead-text;
+}
+
+.c-masthead-home__container {
+    @include make-col-ready();
+    @include make-col(12);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include media-breakpoint-up(md) {
+        @include make-col(6);
+    }
+}
+
+.c-masthead-home__title {
+    @include heading-h0;
+}
+
+.c-masthead-home__summary {
+    margin-top: $unit*2;
+    width: 75%;
+}
+
+.c-masthead-home__btn.c-btn {
+    margin-top: $unit*2;
+    width: fit-content;
+}
+
+.c-masthead-home__media-container {
+    @include make-col-ready();
+    @include make-col(12);
+    margin-top: $unit*3;
+
+    @include media-breakpoint-up(md) {
+        @include make-col(6);
+        margin-top: 0;
+    }
+}
+
+.c-masthead-home__media {
+    height: 100%;
+    object-fit: contain;
+    width: 100%;
+}
+
+// Masthead Modifiers
+// -----------------------------------------------------------------------------
+//
+// Purpose: Enhances or removes styles from default masthead
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+// 1
+.c-masthead-home--media {
+    @include component-margins-bottom;
+    @include component-nomargin-top;
+    @include component-padding(2.5);
+    overflow: hidden;
+    position: relative;
+
+    @include media-breakpoint-up(xl) {
+        min-height: 100vh;
+    }
+
+    &:before {
+        // @include center(horizontal);
+        background-color: $color-brand-tertiary;
+        content: "";
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 50%;
+        // transform: rotate(10deg);
+    }
+}

@@ -18,6 +18,10 @@
     @include component-margins;
 }
 
+.c-profile__title {
+    @include heading-h1;
+}
+
 // Profile Modifiers
 // -----------------------------------------------------------------------------
 //

@@ -41,6 +41,7 @@
 .c-pagination__link {
     @include anchor(1px);
     @include para;
+    cursor: pointer;
     display: inline-block;
     font-weight: bold;
     line-height: 100%;

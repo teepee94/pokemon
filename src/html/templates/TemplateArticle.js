@@ -1,9 +1,8 @@
 
 import React from 'react'
 import { Helmet } from "react-helmet"
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
-import Article from '../../components/Article'
+import Navbar from '../components/Navbar'
+import Article from '../components/Article'
 
 function TemplateArticle() {
     return (
@@ -17,7 +16,6 @@ function TemplateArticle() {
                 <Article />
             </article>
         </main>
-        <Footer />
         </>
     )
 }
