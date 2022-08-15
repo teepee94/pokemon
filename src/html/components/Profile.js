@@ -40,7 +40,7 @@ function Profile(c) {
         <div className={`c-profile ${c.class ? c.class : "" }`}>
             <div className="container">
                 <div className="row">
-                    <h1 className="c-profile__title">My Favourite Pokemon</h1>
+                    <h1 className="c-profile__title">{user ? "My Favourite Pokemon" : "Please login to view"}</h1>
                 </div>
                 <div className="row">
                     {listingItems.map((listingItem, index) => (

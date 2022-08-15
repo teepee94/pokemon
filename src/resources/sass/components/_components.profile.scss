@@ -20,6 +20,8 @@
 
 .c-profile__title {
     @include heading-h1;
+    width: 100%;
+    text-align: center;
 }
 
 // Profile Modifiers
