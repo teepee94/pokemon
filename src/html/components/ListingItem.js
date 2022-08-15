@@ -8,6 +8,7 @@ function ListingItem(c) {
 
     const addToCompare = () => {
         dispatch(increment(c.title))
+        alert('Added to compare, navigate to the compare page to view compared pokemon')
     }
 
     return (
