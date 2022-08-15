@@ -12,6 +12,7 @@ import { login, logout, selectUser } from "../../resources/js/redux/userSlice"
 import { useSelector, useDispatch } from 'react-redux'
 import { selectCompare } from '../../resources/js/redux/compareSlice';
 
+
 function Navbar() {
 
 	const dispatch = useDispatch()
@@ -53,7 +54,7 @@ function Navbar() {
 						<div className="c-navbar__links" id="js-navbar-links">
 							<ul className="c-navbar__list">
 								<li className="c-navbar__item">
-									<a href="/" className="c-navbar__link">All Pokemon</a>
+									<Link to="/" className="c-navbar__link">All Pokemon</Link>
 								</li>
 								<li className="c-navbar__item">
 									<Link to="/compare" items={compareItems} className="c-navbar__link">Compare</Link>

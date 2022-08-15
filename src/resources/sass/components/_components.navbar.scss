@@ -260,7 +260,7 @@
 //
 // -----------------------------------------------------------------------------
 
-body.is-nav-open {
+.c-navbar.is-nav-open {
     // 1
     .c-navbar__links {
         @include media-breakpoint-down(sm) {
