@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 // Templates
 import TemplateArticle from "./html/templates/TemplateArticle";
 import TemplateIndex from "./html/templates/TemplateIndex";
-import TemplateHomepage from "./html/templates/TemplateHomepage";
+// import TemplateHomepage from "./html/templates/TemplateHomepage";
 import TemplateAccount from "./html/templates/TemplateAccount";
 import TemplateCompare from "./html/templates/TemplateCompare";
 
@@ -19,7 +19,7 @@ root.render(
 		<Router>
 			<Routes>
 				<Route path="/pokemon/:name" element={<TemplateArticle />} />
-				<Route exact path="/" element={<TemplateHomepage />} />
+				<Route exact path="/" element={<TemplateIndex />} />
 				<Route exact path="/pokemon" element={<TemplateIndex />} />
 				<Route exact path="/compare" element={<TemplateCompare />} />
 				<Route exact path="/account" element={<TemplateAccount />} />

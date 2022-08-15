@@ -15,7 +15,7 @@ function MastheadHome(c) {
                 </div>
                 {c.image ?
                 <div className="c-masthead-home__media-container">
-                    <img className="c-masthead-home__media" src={c.image} width="200" alt="ash and pikachu dashiesparkle pokemon png" />
+                    <img className="c-masthead-home__media" src={`/resources/images/test/${c.image}`} width="200" alt="ash and pikachu dashiesparkle pokemon png" />
                 </div> : ""}
             </div>
         </div>
