@@ -20,7 +20,6 @@ root.render(
 			<Routes>
 				<Route path="/pokemon/:name" element={<TemplateArticle />} />
 				<Route exact path="/" element={<TemplateIndex />} />
-				<Route exact path="/pokemon" element={<TemplateIndex />} />
 				<Route exact path="/compare" element={<TemplateCompare />} />
 				<Route exact path="/account" element={<TemplateAccount />} />
 			</Routes>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { FENavbar } from "../../resources/js/NavbarFe"
 import "../../resources/sass/components/_components.navbar.scss"
 import { signInWithGoogle } from '../../resources/js/firebase/firebase';
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { login, logout, selectUser } from "../../resources/js/redux/userSlice"
 
 import { useSelector, useDispatch } from 'react-redux'
-import { increment, selectCompare } from '../../resources/js/redux/compareSlice';
+import { selectCompare } from '../../resources/js/redux/compareSlice';
 
 function Navbar() {
 
@@ -31,14 +31,7 @@ function Navbar() {
 				displayName: user.displayName
 			}))
         })
-    }, [])
-
-	const signIn = () => {
-		dispatch(login({
-			uid: "12344",
-			displayName: "Tommy"
-		}))
-	}
+    }, [dispatch])
 
 	const signOutGoogle = () => {
 		const auth = getAuth();
@@ -60,7 +53,7 @@ function Navbar() {
 						<div className="c-navbar__links" id="js-navbar-links">
 							<ul className="c-navbar__list">
 								<li className="c-navbar__item">
-									<a href="/pokemon" className="c-navbar__link">All Pokemon</a>
+									<a href="/" className="c-navbar__link">All Pokemon</a>
 								</li>
 								<li className="c-navbar__item">
 									<Link to="/compare" items={compareItems} className="c-navbar__link">Compare</Link>

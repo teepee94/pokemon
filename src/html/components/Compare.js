@@ -78,7 +78,7 @@ function Compare() {
 					:
 					<div className="c-compare__container">
 						<div className="c-compare__title">No pokem have been selected</div>
-						<a href="/pokemon" className="c-compare__btn c-btn">Add pokemon</a>
+						<a href="/" className="c-compare__btn c-btn">Add pokemon</a>
 					</div>}
                 </div>
             </div>
