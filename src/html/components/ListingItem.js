@@ -1,6 +1,7 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { increment } from "../../resources/js/redux/compareSlice"
+import { Link } from "react-router-dom";
 
 function ListingItem(c) {
     const dispatch = useDispatch()
@@ -11,12 +12,12 @@ function ListingItem(c) {
 
     return (
         <div className={`c-listing__item ${c.class ? c.class : "" }`}>
-            <a href={`/pokemon/${c.title}`} className="c-listing__item-link">
+            <Link to={`/pokemon/${c.title}`} className="c-listing__item-link">
                 <div className="c-listing__item-media-container">
                     <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${c.image}.png`} className="c-listing__item-media" alt={c.title} loading="lazy" />
                 </div>
                 <h2 className="c-listing__item-title">{c.title}</h2>
-            </a>
+            </Link>
             <button onClick={addToCompare} className="c-listing__item-btn c-btn c-btn--primary">compare</button>
         </div>
     )
