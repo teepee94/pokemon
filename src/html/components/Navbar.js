@@ -55,7 +55,7 @@ function Navbar() {
 				<div className="row">
 					<div className="c-navbar__container">
 						<a href="/" className="c-navbar__brand">
-							<img src="/resources/images/logo.png" alt="logo" />
+							<img src="/resources/logo.png" alt="logo" />
 						</a>
 						<div className="c-navbar__links" id="js-navbar-links">
 							<ul className="c-navbar__list">
