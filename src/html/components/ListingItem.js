@@ -1,13 +1,13 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { increment } from "../../resources/js/redux/compareSlice"
+import { addToCompare } from "../../resources/js/redux/compareSlice"
 import { Link } from "react-router-dom";
 
 function ListingItem(c) {
     const dispatch = useDispatch()
 
-    const addToCompare = () => {
-        dispatch(increment(c.title))
+    const handleCompareClick = () => {
+        dispatch(addToCompare(c.title))
         alert('Added to compare, navigate to the compare page to view compared pokemon')
     }
 
@@ -19,7 +19,7 @@ function ListingItem(c) {
                 </div>
                 <h2 className="c-listing__item-title">{c.title}</h2>
             </Link>
-            <button onClick={addToCompare} className="c-listing__item-btn c-btn c-btn--primary">compare</button>
+            <button onClick={handleCompareClick} className="c-listing__item-btn c-btn c-btn--primary">compare</button>
         </div>
     )
 }

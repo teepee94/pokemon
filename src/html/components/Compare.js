@@ -1,45 +1,76 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { selectCompare } from '../../resources/js/redux/compareSlice';
-import axios from "../../resources/js/api/Axios"
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { removeFromCompare, selectCompare } from '../../resources/js/redux/compareSlice';
+import axios, { isCancel } from "../../resources/js/api/Axios"
 import requests from '../../resources/js/api/Requests'
 import "../../resources/sass/components/_components.compare.scss"
 
-
 function Compare() {
+	const dispatch = useDispatch()
+	const compare = useSelector(selectCompare)
 
-    const [items, setItems] = useState([])
+	const [items, setItems] = useState([])
+	const [isLoading, setIsLoading] = useState(false)
+	const [error, setError] = useState(null)
 
-    const compare = useSelector(selectCompare);
-
-    useEffect(() => {
-		async function getItemData(name) {
-			await axios.get(`${requests.pokemon}/${name}`)
-			.then((request) => {
-	
-				setItems([...items, request.data]);
-	
-				return request;
-			}).catch(err => alert(err));
+	// Fetch every selected pokemon in parallel and commit them in one update.
+	// Depends only on `compare`, so it runs once per change to the selection
+	// rather than re-triggering itself as results arrive.
+	useEffect(() => {
+		if (compare.length === 0) {
+			setItems([])
+			return
 		}
 
-		if(compare.length > items.length) {
-			compare.map(c => (
-				getItemData(c)
-			))
-		}
-	}, [compare, items])
-	
+		const controller = new AbortController()
 
-    return (
-        <div className="c-compare">
-            <div className="container">
-                <div className="row">
-					{items.length > 0 ?
+		setIsLoading(true)
+		setError(null)
+
+		Promise.all(
+			compare.map(name => axios.get(`${requests.pokemon}/${name}`, { signal: controller.signal }))
+		)
+			.then(responses => setItems(responses.map(response => response.data)))
+			.catch(err => {
+				if (!isCancel(err)) setError(err)
+			})
+			.finally(() => {
+				if (!controller.signal.aborted) setIsLoading(false)
+			})
+
+		return () => controller.abort()
+	}, [compare])
+
+	if (compare.length === 0) {
+		return (
+			<div className="c-compare">
+				<div className="container">
+					<div className="row">
+						<div className="c-compare__container">
+							<div className="c-compare__title">No Pokémon have been selected</div>
+							<Link to="/" className="c-compare__btn c-btn">Add Pokémon</Link>
+						</div>
+					</div>
+				</div>
+			</div>
+		)
+	}
+
+	return (
+		<div className="c-compare">
+			<div className="container">
+				<div className="row">
+					{error && <p role="alert">Sorry, we couldn't load these Pokémon. Please try again.</p>}
+					{isLoading && <p aria-live="polite">Loading…</p>}
+					{!isLoading && !error &&
 					<div className="c-compare__items">
-						{items.map((item, index) => (
-							<div key={index} className="c-compare__item">
+						{items.map(item => (
+							<div key={item.id} className="c-compare__item">
 								<h2 className="c-compare__item-title">{item.name}</h2>
+								<button onClick={() => dispatch(removeFromCompare(item.name))} className="c-btn">
+									Remove<span className="u-visually-hide"> {item.name}</span>
+								</button>
 								<div className="c-compare__item-section">
 									<h3 className="c-compare__item-section-title">Height</h3>
 									<div className="c-compare__item-section-content">{item.height}</div>
@@ -49,15 +80,15 @@ function Compare() {
 									<div className="c-compare__item-section-content">{item.weight}</div>
 								</div>
 								<div className="c-compare__item-section">
-									<h3 className="c-compare__item-section-title">Stats</h3>  
+									<h3 className="c-compare__item-section-title">Stats</h3>
 									<div className="c-compare__item-section-content">
 										<ul>
-											{item.stats.map((stat, index) => (
-												<>
-												<li style={{marginTop: 10}} key={index+1*9997}>Name: {stat.stat.name}</li>
-												<li key={index+1*9998}>Base stat: {stat.base_stat}</li>
-												<li key={index+1*9999}>Effort: {stat.effort}</li>
-												</> 
+											{item.stats.map(stat => (
+												<React.Fragment key={stat.stat.name}>
+													<li style={{marginTop: 10}}>Name: {stat.stat.name}</li>
+													<li>Base stat: {stat.base_stat}</li>
+													<li>Effort: {stat.effort}</li>
+												</React.Fragment>
 											))}
 										</ul>
 									</div>
@@ -66,24 +97,19 @@ function Compare() {
 									<h3 className="c-compare__item-section-title">Moves</h3>
 									<div className="c-compare__item-section-content">
 										<ul>
-											{item.moves.map((move, index) => (
-												<li key={index*2*9997}>{move.move.name}</li>
+											{item.moves.map(move => (
+												<li key={move.move.name}>{move.move.name}</li>
 											))}
 										</ul>
-									</div> 
+									</div>
 								</div>
 							</div>
 						))}
-					</div>
-					:
-					<div className="c-compare__container">
-						<div className="c-compare__title">No pokem have been selected</div>
-						<a href="/" className="c-compare__btn c-btn">Add pokemon</a>
 					</div>}
-                </div>
-            </div>
-        </div>
-    )
+				</div>
+			</div>
+		</div>
+	)
 }
 
 export default Compare

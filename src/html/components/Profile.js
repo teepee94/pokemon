@@ -9,42 +9,54 @@ import { useSelector } from 'react-redux'
 import { selectUser } from "../../resources/js/redux/userSlice"
 
 function Profile(c) {
+    const { uid, status } = useSelector(selectUser)
 
-    const [listingItems, setListingItems] = useState([])
-
-    const user = useSelector(selectUser).uid
+    const [favourites, setFavourites] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
+        // Signed out (or switched account): never keep showing the old list.
+        setFavourites([])
+        setError(null)
 
-        async function getListingItems() {
+        if (!uid) return
 
-            const querySnapshot = await getDocs(collection(db, "pokemon", user, "favourites"));
+        // getDocs can't be aborted, so ignore the result if uid changes or we
+        // unmount before it resolves.
+        let ignore = false
+        setIsLoading(true)
 
-            const items = [];
+        getDocs(collection(db, "pokemon", uid, "favourites"))
+            .then(querySnapshot => {
+                if (ignore) return
+                setFavourites(querySnapshot.docs.map(doc => ({ name: doc.id, id: doc.data().id })))
+            })
+            .catch(err => {
+                if (!ignore) setError(err)
+            })
+            .finally(() => {
+                if (!ignore) setIsLoading(false)
+            })
 
-            querySnapshot.forEach((doc) => {
-                items.push([doc.id, doc.data().id])
-            });
+        return () => { ignore = true }
+    }, [uid])
 
-            setListingItems(items)
-        }
-
-        if(user) {
-            getListingItems();
-        }
-        
-
-    }, [user])
+    const title = status === "loading"
+        ? "Loading…"
+        : uid ? "My Favourite Pokemon" : "Please login to view"
 
     return (
         <div className={`c-profile ${c.class ? c.class : "" }`}>
             <div className="container">
                 <div className="row">
-                    <h1 className="c-profile__title">{user ? "My Favourite Pokemon" : "Please login to view"}</h1>
+                    <h1 className="c-profile__title">{title}</h1>
                 </div>
-                <div className="row">
-                    {listingItems.map((listingItem, index) => (
-                        <ListingItem key={index} title={listingItem[0]} image={listingItem[1]} />
+                <div className="row" aria-busy={isLoading}>
+                    {error && <p role="alert">Sorry, we couldn't load your favourites.</p>}
+                    {uid && !isLoading && !error && favourites.length === 0 && <p>You haven't added any favourites yet.</p>}
+                    {favourites.map(favourite => (
+                        <ListingItem key={favourite.name} title={favourite.name} image={favourite.id} />
                     ))}
                 </div>
             </div>

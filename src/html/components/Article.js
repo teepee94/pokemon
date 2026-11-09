@@ -1,52 +1,100 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from "react-router-dom";
 import "../../resources/sass/components/_components.article.scss"
-import axios from "../../resources/js/api/Axios"
+import axios, { isCancel } from "../../resources/js/api/Axios"
 import requests from '../../resources/js/api/Requests'
 import Masthead from "./Masthead"
-import { getAuth } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc } from "firebase/firestore";
+import { useSelector } from 'react-redux'
 import { db } from "../../resources/js/firebase/firebase"
+import { selectUser } from "../../resources/js/redux/userSlice"
 
+const FAVOURITE_LABELS = {
+    idle: "Add to Favourites",
+    saving: "Saving…",
+    saved: "Added to Favourites",
+    error: "Couldn't save, try again",
+}
 
-
-function Article(c) {    
+function Article(c) {
     const { name } = useParams();
+    const user = useSelector(selectUser)
 
-    const [articleData, setArticleData] = useState([]);
+    const [articleData, setArticleData] = useState(null);
+    const [error, setError] = useState(null);
+    const [favouriteStatus, setFavouriteStatus] = useState("idle");
 
-	useEffect(() => {
-		async function getArticleData() {
-			const request = await axios.get(`${requests.pokemon}/${name}`);
+    useEffect(() => {
+        const controller = new AbortController()
 
-			setArticleData(request.data);
+        // Clear the previous pokemon so its data never shows under a new name.
+        setArticleData(null)
+        setError(null)
+        setFavouriteStatus("idle")
 
-			return request;
-		}
+        axios.get(`${requests.pokemon}/${encodeURIComponent(name)}`, { signal: controller.signal })
+            .then(response => setArticleData(response.data))
+            .catch(err => {
+                if (!isCancel(err)) setError(err)
+            })
 
-		getArticleData();
-	}, [name])
+        return () => controller.abort()
+    }, [name])
 
-    const addToFavourties = () => {
-        const user = getAuth();
-
-        if(user.currentUser) {
-            setDoc(doc(db, "pokemon", user.currentUser.uid, "favourites", name), {
-                id: articleData.id
-            });
-        } else {
+    const addToFavourites = async () => {
+        if (!user.uid) {
             alert("Please sign in")
+            return
         }
+
+        setFavouriteStatus("saving")
+
+        try {
+            // Key the document on the name the API returned, not the raw URL
+            // param, so only real pokemon can be saved.
+            await setDoc(doc(db, "pokemon", user.uid, "favourites", articleData.name), {
+                id: articleData.id
+            })
+            setFavouriteStatus("saved")
+        } catch (err) {
+            console.error(err)
+            setFavouriteStatus("error")
+        }
+    }
+
+    if (error || !articleData) {
+        const isNotFound = error?.response?.status === 404
+
+        return (
+            <>
+            <Masthead title={name} />
+            <div className={`c-article ${c.class ? c.class : "" }`}>
+                <div className="container">
+                    <div className="row">
+                        {error
+                            ? <p role="alert">{isNotFound ? "We couldn't find that Pokémon." : "Sorry, something went wrong loading this Pokémon."}</p>
+                            : <p aria-live="polite">Loading…</p>}
+                    </div>
+                </div>
+            </div>
+            </>
+        )
     }
 
     return (
         <>
-        <Masthead title={name} />
+        <Masthead title={articleData.name} />
         <div className={`c-article ${c.class ? c.class : "" }`}>
             <div className="container">
                 <div className="row">
                     <div className="c-article__btn-container">
-                        <button onClick={addToFavourties} className="c-article__btn c-btn">Add to Favourites</button>
+                        <button
+                            onClick={addToFavourites}
+                            disabled={favouriteStatus === "saving" || favouriteStatus === "saved"}
+                            className="c-article__btn c-btn"
+                        >
+                            {FAVOURITE_LABELS[favouriteStatus]}
+                        </button>
                     </div>
                 </div>
                 <div className="row">
@@ -54,8 +102,8 @@ function Article(c) {
                         <div className="c-article__content-wrapper">
                             <h2>Moves</h2>
                             <ul>
-                                {articleData.moves?.map((item, index) => (
-                                    <li key={index}>{item.move.name}</li>
+                                {articleData.moves.map(item => (
+                                    <li key={item.move.name}>{item.move.name}</li>
                                 ))}
                             </ul>
                         </div>
@@ -65,7 +113,7 @@ function Article(c) {
                             <div className="c-article__content-section">
                                 <div className="c-article__content-wrapper">
                                     <h2>Image</h2>
-                                    <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${articleData.id}.png`} alt="" />
+                                    <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${articleData.id}.png`} alt={articleData.name} />
                                 </div>
                             </div>
                             <div className="c-article__content-section">
@@ -84,8 +132,8 @@ function Article(c) {
                                 <div className="c-article__content-wrapper">
                                     <h2>Abilities</h2>
                                     <ul>
-                                        {articleData.abilities?.map((item, index) => (
-                                            <li key={index}>{item.ability.name}</li>
+                                        {articleData.abilities.map(item => (
+                                            <li key={item.ability.name}>{item.ability.name}</li>
                                         ))}
                                     </ul>
                                 </div>
@@ -100,8 +148,8 @@ function Article(c) {
                                 <div className="c-article__content-wrapper">
                                     <h2>Stats</h2>
                                     <ul>
-                                        {articleData.stats?.map((item, index) => (
-                                            <li key={index}>
+                                        {articleData.stats.map(item => (
+                                            <li key={item.stat.name}>
                                                 <p>{item.stat.name}: {item.base_stat}. Effort: {item.effort}</p>
                                             </li>
                                         ))}
@@ -112,8 +160,8 @@ function Article(c) {
                                 <div className="c-article__content-wrapper">
                                     <h2>Types</h2>
                                     <ul>
-                                        {articleData.types?.map((item, index) => (
-                                            <li key={index}>
+                                        {articleData.types.map(item => (
+                                            <li key={item.type.name}>
                                                 <p>{item.type.name}</p>
                                             </li>
                                         ))}
