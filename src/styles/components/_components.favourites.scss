@@ -1,0 +1,42 @@
+// =============================================================================
+// Favourites
+// =============================================================================
+//
+// Purpose: The signed-in user's favourites, plus signed-out and empty states
+//
+// -----------------------------------------------------------------------------
+
+@use "../abstracts" as *;
+
+.c-favourites {
+    @include component-margins-bottom;
+}
+
+.c-favourites__panel {
+    align-items: center;
+    background-color: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-sm;
+    display: flex;
+    flex-direction: column;
+    gap: $unit * 1.5;
+    margin: 0 auto;
+    max-width: 560px;
+    padding: $unit * 5 $unit * 3;
+    text-align: center;
+}
+
+.c-favourites__title {
+    @include heading-h3;
+}
+
+.c-favourites__text,
+.c-favourites__message {
+    color: $color-text-muted;
+}
+
+.c-favourites__message {
+    padding: $unit * 4 0;
+    text-align: center;
+}

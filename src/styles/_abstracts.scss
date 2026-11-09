@@ -1,0 +1,16 @@
+// =============================================================================
+// Abstracts
+// =============================================================================
+//
+// Purpose: Every variable and mixin, and nothing that outputs CSS. Components
+// `@use` this, so it's safe to include in every stylesheet without
+// duplicating rules in the bundle. Global CSS lives in site.scss, which is
+// imported once from main.jsx.
+//
+// -----------------------------------------------------------------------------
+
+@import "settings/all";
+@import "vendor/mixins/breakpoints";
+@import "vendor/mixins/grid-framework";
+@import "vendor/mixins/grid";
+@import "tools/all";

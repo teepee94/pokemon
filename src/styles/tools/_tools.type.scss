@@ -1,0 +1,19 @@
+// =============================================================================
+// Type
+// =============================================================================
+//
+// Purpose: Font stack. Helvetica Neue where available, otherwise the
+// platform's UI font, so nothing has to be downloaded.
+//
+// -----------------------------------------------------------------------------
+
+@mixin font-helvetica-neue() {
+    font-family:
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        sans-serif;
+}

@@ -1,0 +1,88 @@
+// =============================================================================
+// Selectboxes (dropdowns)
+// =============================================================================
+
+// Selectbox
+// -----------------------------------------------------------------------------
+//
+// Purpose: We want the default HTML select boxes to look good so we are using some CSS trickery to hide the original select
+//
+//
+// 1. Down arrow icon
+// 2. Select validation error
+// 3. Select valid
+// 4. Select hover/focus
+//
+// -----------------------------------------------------------------------------
+
+.c-selectbox {
+    display: inline-block;
+    position: relative;
+
+    // 1
+    svg {
+        @include center(vertical);
+        fill: $color-form-input-text;
+        height: $unit * 1.5;
+        pointer-events: none;
+        right: $unit * 1.4;
+        width: $unit * 1.2;
+    }
+}
+
+.c-selectbox__select {
+    @include font-size(1.5);
+    appearance: none;
+    background-color: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
+    color: $color-form-input-text;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
+    outline: none;
+    padding: $unit * 1.2 $unit * 4 $unit * 1.2 $unit * 1.4;
+    position: relative;
+    transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+    width: 100%;
+
+    &::-ms-expand {
+        display: none;
+    }
+
+    // 2
+    &.error {
+        border-color: $color-form-validation-border-error;
+    }
+
+    // 4
+    &:hover {
+        border-color: $color-grey;
+    }
+
+    &:focus-visible {
+        border-color: $color-brand-primary;
+        box-shadow: 0 0 0 3px rgba($color-brand-primary, 0.2);
+    }
+
+    option {
+        background-color: $color-select-option-bg;
+        color: $color-select-text;
+    }
+}
+
+// Selectbox Modifiers
+// -----------------------------------------------------------------------------
+//
+// Purpose: Enhances or removes styles from default selectbox
+//
+//
+// 1.
+//
+// -----------------------------------------------------------------------------
+
+// 1

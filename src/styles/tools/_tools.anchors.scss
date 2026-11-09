@@ -1,0 +1,34 @@
+// =============================================================================
+// Anchor Mixins
+// =============================================================================
+//
+// Purpose: Animated underline that grows (anchor) or shrinks (anchor-reverse)
+// on hover
+//
+// -----------------------------------------------------------------------------
+
+@mixin anchor($size: 1px) {
+    background-image: linear-gradient(to bottom, currentColor, currentColor);
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    background-size: 0 $size;
+    text-decoration: none;
+    transition: background-size 0.45s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    @include hover {
+        background-size: 100% $size;
+    }
+}
+
+@mixin anchor-reverse($size: 1px) {
+    background-image: linear-gradient(to bottom, currentColor, currentColor);
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-size: 100% $size;
+    text-decoration: none;
+    transition: background-size 0.45s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+    @include hover {
+        background-size: 0 $size;
+    }
+}

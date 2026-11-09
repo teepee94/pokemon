@@ -1,0 +1,32 @@
+// =============================================================================
+// Site CSS
+// =============================================================================
+//
+// Purpose: Global styles, imported once from main.jsx. Component styles are
+// imported by their components and pull in variables/mixins from abstracts.
+//
+// 1. Variables & mixins (no output)
+// 2. Reset
+// 3. Elements
+// 4. Utility classes
+//
+// -----------------------------------------------------------------------------
+
+// 1
+@import "abstracts";
+
+// 2
+@import "generic/generic.reset";
+
+// 3
+@import "elements/elements.page";
+@import "elements/elements.layout";
+@import "elements/elements.links";
+@import "elements/elements.buttons";
+@import "elements/elements.images";
+@import "elements/elements.selects";
+
+// 4
+.u-visually-hide {
+    @include visually-hide;
+}

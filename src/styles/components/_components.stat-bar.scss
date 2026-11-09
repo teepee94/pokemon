@@ -1,0 +1,41 @@
+// =============================================================================
+// Stat Bar
+// =============================================================================
+//
+// Purpose: A base stat value with a proportional bar. Used on the compare
+// table and the detail page.
+//
+//
+// 1. The fill colour can be themed by a parent via --stat-fill
+//
+// -----------------------------------------------------------------------------
+
+@use "../abstracts" as *;
+
+.c-stat {
+    align-items: center;
+    display: flex;
+    gap: $unit;
+}
+
+.c-stat__value {
+    font-variant-numeric: tabular-nums;
+    min-width: 3ch;
+    text-align: right;
+}
+
+.c-stat__track {
+    background-color: $color-surface-sunken;
+    border-radius: $radius-pill;
+    flex: 1;
+    height: 8px;
+    overflow: hidden;
+}
+
+.c-stat__fill {
+    background-color: var(--stat-fill, #aab5c8); // 1
+    border-radius: inherit;
+    display: block;
+    height: 100%;
+    transition: width 0.4s $ease-out;
+}

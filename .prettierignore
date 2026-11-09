@@ -1,0 +1,6 @@
+dist
+coverage
+package-lock.json
+public
+src/styles/vendor
+.claude

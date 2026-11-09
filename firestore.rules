@@ -1,0 +1,35 @@
+rules_version = '2';
+
+// Security rules for the Pokédex. The Firebase web config in src/lib/firebase.js
+// is public by design; these rules are what actually protect the data.
+//
+// Data model: pokemon/{uid}/favourites/{name} = { id: int }
+//
+// Deploy with: firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    // Exactly one field, a positive integer Pokédex id, keyed by a PokeAPI
+    // style name (lowercase letters, digits and hyphens).
+    function isValidFavourite(name) {
+      return name.matches('^[a-z0-9-]{1,40}$')
+        && request.resource.data.keys().hasOnly(['id'])
+        && request.resource.data.id is int
+        && request.resource.data.id > 0;
+    }
+
+    match /pokemon/{uid}/favourites/{name} {
+      allow read, delete: if isOwner(uid);
+      allow create, update: if isOwner(uid) && isValidFavourite(name);
+    }
+
+    // Everything else is closed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

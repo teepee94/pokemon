@@ -1,0 +1,62 @@
+// =============================================================================
+// Colour Settings
+// =============================================================================
+
+// Brand & Neutral Colours
+// -----------------------------------------------------------------------------
+//
+// Purpose: The palette. Everything else references these rather than hex
+// values. Surface, border and type colours live in _settings.surfaces.scss.
+//
+// -----------------------------------------------------------------------------
+
+$color-black: #000000;
+$color-brand-primary: #3663ad;
+$color-brand-secondary: #ffcb05;
+$color-grey: #767676;
+$color-grey-dark: #3d3d3d;
+$color-white: #ffffff;
+
+$color-validation-error: #e00000;
+$color-validation-success: #008000;
+
+// Page
+// -----------------------------------------------------------------------------
+
+$color-page-bg: #f4f6fa;
+$color-page-focus-outline: $color-brand-primary;
+$color-page-text: $color-black;
+$color-page-text-selection-bg: $color-black;
+$color-page-text-selection-text: $color-white;
+
+// Buttons
+// -----------------------------------------------------------------------------
+//
+// 1. Default button
+// 2. Primary button
+//
+// -----------------------------------------------------------------------------
+
+// 1
+$color-btn-bg: $color-black;
+$color-btn-border: $color-black;
+$color-btn-hover-bg: $color-brand-primary;
+$color-btn-hover-border: transparent;
+$color-btn-hover-text: $color-white;
+$color-btn-text: $color-white;
+
+// 2
+$color-btn-primary-bg: $color-brand-primary;
+$color-btn-primary-border: $color-brand-primary;
+$color-btn-primary-hover-bg: $color-black;
+$color-btn-primary-hover-border: transparent;
+$color-btn-primary-hover-text: $color-white;
+$color-btn-primary-text: $color-white;
+
+// Forms & Selects
+// -----------------------------------------------------------------------------
+
+$color-form-input-text: $color-black;
+$color-form-validation-border-error: $color-validation-error;
+$color-select-option-bg: $color-white;
+$color-select-text: $color-black;
