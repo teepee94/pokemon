@@ -60,9 +60,10 @@ a[href="#main-content"]{
 
 // 9
 :focus {
-    outline: $color-page-focus-outline dashed 5px;
+    outline: none;
 }
 
-.js-focus-visible :focus:not(.focus-visible) {
-    outline: none !important;
+:focus-visible {
+    outline: 3px solid $color-page-focus-outline;
+    outline-offset: 2px;
 }

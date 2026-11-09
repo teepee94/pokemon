@@ -1,0 +1,50 @@
+// =============================================================================
+// Type Badge
+// =============================================================================
+//
+// Purpose: Coloured pill for a pokemon type
+//
+//
+// 1. Pick dark or light text per type so every badge stays readable
+//
+// -----------------------------------------------------------------------------
+
+@use "sass:color";
+@use "sass:math";
+@import "../site.scss";
+
+$type-badge-dark-text: #1d2330;
+
+@function _channel($value) {
+    $c: math.div($value, 255);
+    @return if($c <= 0.03928, math.div($c, 12.92), math.pow(math.div($c + 0.055, 1.055), 2.4));
+}
+
+@function _luminance($color) {
+    @return 0.2126 * _channel(color.red($color)) + 0.7152 * _channel(color.green($color)) + 0.0722 * _channel(color.blue($color));
+}
+
+@function _contrast($a, $b) {
+    $la: _luminance($a) + 0.05;
+    $lb: _luminance($b) + 0.05;
+    @return math.div(math.max($la, $lb), math.min($la, $lb));
+}
+
+.c-type-badge {
+    @include font-size(1.2);
+    border-radius: $radius-pill;
+    display: inline-block;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 1;
+    padding: 5px 10px;
+    text-transform: uppercase;
+}
+
+@each $type, $bg in $pokemon-types {
+    .c-type-badge--#{$type} {
+        background-color: $bg;
+        // 1
+        color: if(_contrast($bg, $type-badge-dark-text) > _contrast($bg, $color-white), $type-badge-dark-text, $color-white);
+    }
+}

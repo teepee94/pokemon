@@ -332,3 +332,48 @@
 .c-navbar.is-sticky {
     background-color: $color-brand-primary;
 }
+
+
+// Navbar Enhancements
+// -----------------------------------------------------------------------------
+//
+// Purpose: Active link, compare count badge and sticky elevation
+//
+// -----------------------------------------------------------------------------
+
+.c-navbar {
+    transition: background-color 0.25s, box-shadow 0.25s, padding 0.25s;
+}
+
+.c-navbar.is-sticky {
+    box-shadow: 0 4px 20px -8px rgba(16, 24, 40, 0.45);
+
+    @include media-breakpoint-up(lg) {
+        padding: $unit*1.5 0;
+    }
+}
+
+.c-navbar__link.is-active {
+    @include media-breakpoint-up(md) {
+        background-size: 100% 2px;
+    }
+}
+
+.c-navbar__badge {
+    @include font-size(1.2);
+    align-items: center;
+    background-color: $color-brand-secondary;
+    border-radius: $radius-pill;
+    color: #1d2330;
+    display: inline-flex;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    height: 20px;
+    justify-content: center;
+    line-height: 1;
+    margin-left: 6px;
+    min-width: 20px;
+    padding: 0 6px;
+    position: relative;
+    top: -1px;
+}

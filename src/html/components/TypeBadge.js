@@ -1,0 +1,9 @@
+import React from 'react'
+import "../../resources/sass/components/_components.type-badge.scss"
+import { formatName } from '../../resources/js/utils/format'
+
+function TypeBadge({ type }) {
+    return <span className={`c-type-badge c-type-badge--${type}`}>{formatName(type)}</span>
+}
+
+export default TypeBadge

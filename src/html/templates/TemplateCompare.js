@@ -8,14 +8,16 @@ function TemplateCompare() {
 	return (
 		<>
 		<Helmet>
-			<title>Compare</title>
+			<title>Compare · Pokédex</title>
 		</Helmet>
 		<Navbar />
 		<main id="main-content">
-			<article>
-				<Masthead title="Compare" />
-				<Compare />
-			</article>
+			<Masthead
+				eyebrow="Compare"
+				title="Side by side"
+				summary="Stats, abilities and moves lined up in one table. The highest value in each row is highlighted."
+			/>
+			<Compare />
 		</main>
 		</>
 	)

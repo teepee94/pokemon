@@ -1,0 +1,778 @@
+// =============================================================================
+// Pokémon Detail
+// =============================================================================
+
+// Theme
+// -----------------------------------------------------------------------------
+//
+// Purpose: Each page is themed by the pokemon's primary type. Components read
+// --type-color rather than knowing about types themselves.
+//
+// -----------------------------------------------------------------------------
+
+@import "../site.scss";
+
+.c-detail {
+    --type-color: #{$color-brand-primary};
+    @include component-margins-bottom;
+}
+
+@each $type, $color in $pokemon-types {
+    .c-detail--#{$type} {
+        --type-color: #{$color};
+    }
+}
+
+
+// Hero
+// -----------------------------------------------------------------------------
+//
+// 1. Clears the fixed navbar
+// 2. Soft glow in the type colour behind the artwork
+//
+// -----------------------------------------------------------------------------
+
+.c-detail-hero {
+    background: linear-gradient(135deg, $color-brand-primary 0%, mix($color-brand-primary, #0b1a3a, 70%) 100%);
+    color: $color-white;
+    overflow: hidden;
+    padding: 90px 0 $unit*4; // 1
+    position: relative;
+
+    @include media-breakpoint-up(md) {
+        padding: 120px 0 $unit*5;
+    }
+
+    @include media-breakpoint-up(lg) {
+        padding-top: 140px;
+    }
+}
+
+.c-detail-hero__inner {
+    align-items: center;
+    display: grid;
+    gap: $unit*2;
+
+    @include media-breakpoint-up(lg) {
+        gap: $unit*6;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+}
+
+.c-detail-hero__media {
+    aspect-ratio: 1;
+    display: grid;
+    margin: 0 auto;
+    max-width: 260px;
+    place-items: center;
+    position: relative;
+    width: 100%;
+
+    @include media-breakpoint-up(md) {
+        max-width: 360px;
+    }
+
+    @include media-breakpoint-up(lg) {
+        max-width: 420px;
+    }
+
+    // 2
+    &::before {
+        background: radial-gradient(circle, var(--type-color) 0%, transparent 68%);
+        border-radius: 50%;
+        content: "";
+        inset: 4%;
+        opacity: 0.55;
+        position: absolute;
+    }
+
+    img {
+        filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.3));
+        height: auto;
+        position: relative;
+        width: 100%;
+    }
+}
+
+.c-detail-hero__content {
+    min-width: 0;
+}
+
+.c-detail-hero__eyebrow {
+    @include font-size(1.4);
+    color: rgba($color-white, 0.75);
+    display: flex;
+    flex-wrap: wrap;
+    font-weight: 500;
+    gap: $unit;
+    margin-bottom: $unit*0.4;
+}
+
+.c-detail-hero__number {
+    color: $color-brand-secondary;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+}
+
+.c-detail-hero__title {
+    @include heading-h1;
+    overflow-wrap: anywhere;
+
+    @include media-breakpoint-up(md) {
+        @include heading-h0;
+    }
+}
+
+.c-detail-hero__types {
+    display: flex;
+    gap: $unit*0.8;
+    margin-top: $unit;
+}
+
+.c-detail-hero__flavour {
+    color: rgba($color-white, 0.85);
+    margin-top: $unit*2;
+    max-width: 56ch;
+    min-height: 3.2em;
+
+    &.is-loading {
+        background: linear-gradient(90deg, rgba($color-white, 0.08), rgba($color-white, 0.16), rgba($color-white, 0.08));
+        border-radius: $radius-sm;
+    }
+}
+
+.c-detail-hero__facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: $unit*2.5;
+    max-width: 480px;
+
+    > div {
+        padding: 0 $unit*1.5;
+
+        &:first-child {
+            padding-left: 0;
+        }
+
+        & + div {
+            border-left: 1px solid rgba($color-white, 0.2);
+        }
+    }
+
+    dt {
+        @include font-size(1.2);
+        color: rgba($color-white, 0.65);
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    dd {
+        @include font-size(1.8);
+        font-variant-numeric: tabular-nums;
+        font-weight: 700;
+        margin-top: 2px;
+        white-space: nowrap;
+    }
+}
+
+.c-detail-hero__actions {
+    display: grid;
+    gap: $unit;
+    grid-template-columns: 1fr 1fr auto;
+    margin-top: $unit*3;
+
+    @include media-breakpoint-up(sm) {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .c-detail-hero__btn {
+        justify-content: center;
+    }
+}
+
+.c-detail-hero__btn {
+    @include font-size(1.5);
+    align-items: center;
+    background-color: rgba($color-white, 0.08);
+    border: 1px solid rgba($color-white, 0.4);
+    border-radius: $radius-pill;
+    color: $color-white;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: inherit;
+    font-weight: 500;
+    gap: $unit*0.8;
+    padding: $unit*1.1 $unit*1.8;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+
+    svg {
+        fill: none;
+        height: 18px;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2;
+        width: 18px;
+
+        &.is-filled {
+            fill: currentColor;
+        }
+    }
+
+    &:hover:not(:disabled) {
+        background-color: rgba($color-white, 0.16);
+        border-color: $color-white;
+    }
+
+    &:active:not(:disabled) {
+        transform: scale(0.97);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    &.is-active {
+        background-color: $color-brand-secondary;
+        border-color: $color-brand-secondary;
+        color: #1d2330;
+    }
+}
+
+.c-detail-hero__btn--primary {
+    background-color: $color-white;
+    border-color: $color-white;
+    color: $color-brand-primary;
+
+    &:hover:not(:disabled) {
+        background-color: $color-white;
+        color: mix($color-brand-primary, #0b1a3a, 70%);
+    }
+
+    &.is-active {
+        background-color: $color-white;
+        border-color: $color-white;
+        color: #d6264f;
+    }
+}
+
+.c-detail-hero__btn--icon {
+    justify-content: center;
+    padding: 0;
+    height: 44px;
+    width: 44px;
+}
+
+
+// Body
+// -----------------------------------------------------------------------------
+
+.c-detail__body {
+    margin-top: $unit*3;
+
+    @include media-breakpoint-up(md) {
+        margin-top: $unit*4;
+    }
+}
+
+.c-detail__grid {
+    display: grid;
+    gap: $unit*2;
+
+    @include media-breakpoint-up(lg) {
+        gap: $unit*2.5;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.c-detail__moves {
+    @include media-breakpoint-up(lg) {
+        grid-column: 1 / -1;
+    }
+}
+
+.c-detail__message {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: $unit*2;
+    margin: 0 auto;
+    max-width: 560px;
+    text-align: center;
+}
+
+
+// Panel
+// -----------------------------------------------------------------------------
+//
+// Purpose: White card used for each section of the page
+//
+// -----------------------------------------------------------------------------
+
+.c-panel {
+    background-color: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-sm;
+    padding: $unit*2;
+
+    @include media-breakpoint-up(md) {
+        padding: $unit*2.8;
+    }
+}
+
+.c-panel__title {
+    @include heading-h4;
+    align-items: center;
+    display: flex;
+    font-weight: 700;
+    gap: $unit*0.8;
+    margin-bottom: $unit*1.6;
+}
+
+.c-panel__count {
+    @include font-size(1.3);
+    background-color: $color-surface-muted;
+    border-radius: $radius-pill;
+    color: $color-text-muted;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    padding: 2px 8px;
+}
+
+.c-panel__subtitle {
+    @include font-size(1.2);
+    color: $color-text-muted;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin: $unit*2.2 0 $unit;
+    text-transform: uppercase;
+
+    .c-panel__title + & {
+        margin-top: 0;
+    }
+}
+
+
+// Stats
+// -----------------------------------------------------------------------------
+
+.c-detail__stats {
+    --stat-fill: var(--type-color);
+}
+
+.c-detail__stat-list {
+    display: grid;
+    gap: $unit*1.2;
+}
+
+.c-detail__stat-row {
+    @include font-size(1.5);
+    align-items: center;
+    display: grid;
+    gap: $unit;
+    grid-template-columns: 72px 1fr;
+
+    dt {
+        color: $color-text-muted;
+        font-weight: 500;
+    }
+
+    dd {
+        font-weight: 700;
+    }
+
+    .c-stat__track {
+        height: 10px;
+    }
+}
+
+.c-detail__stat-row--total {
+    border-top: 1px solid $color-border;
+    margin-top: $unit*0.4;
+    padding-top: $unit*1.4;
+
+    dt {
+        color: $color-black;
+        font-weight: 700;
+    }
+}
+
+
+// About
+// -----------------------------------------------------------------------------
+
+.c-detail__abilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $unit*0.8;
+}
+
+.c-detail__ability {
+    @include font-size(1.4);
+    align-items: center;
+    background-color: $color-surface-muted;
+    border: 1px solid $color-border;
+    border-radius: $radius-pill;
+    display: inline-flex;
+    font-weight: 500;
+    gap: $unit*0.8;
+    padding: 6px 14px;
+}
+
+.c-detail__ability-note {
+    @include font-size(1.1);
+    color: $color-text-muted;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.c-detail__facts {
+    display: grid;
+    gap: $unit*1.4 $unit*2;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+
+    dt {
+        @include font-size(1.3);
+        color: $color-text-muted;
+    }
+
+    dd {
+        @include font-size(1.5);
+        font-weight: 700;
+        margin-top: 2px;
+    }
+}
+
+.c-detail__facts-wide {
+    grid-column: 1 / -1;
+}
+
+.c-gender {
+    max-width: 320px;
+}
+
+.c-gender__bar {
+    background-color: #ef70a8;
+    border-radius: $radius-pill;
+    display: block;
+    height: 8px;
+    margin-top: 6px;
+    overflow: hidden;
+}
+
+.c-gender__male {
+    background-color: #4a8fe7;
+    display: block;
+    height: 100%;
+}
+
+.c-gender__labels {
+    @include font-size(1.3);
+    color: $color-text-muted;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+
+// Moves
+// -----------------------------------------------------------------------------
+//
+// 1. The list scrolls inside the panel so long move pools never stretch the page
+//
+// -----------------------------------------------------------------------------
+
+.c-detail__moves-header {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: $unit;
+    justify-content: space-between;
+    margin-bottom: $unit*1.6;
+
+    .c-panel__title {
+        margin-bottom: 0;
+    }
+}
+
+.c-search {
+    position: relative;
+    width: 100%;
+
+    @include media-breakpoint-up(sm) {
+        width: 260px;
+    }
+
+    svg {
+        fill: none;
+        height: 16px;
+        left: 12px;
+        pointer-events: none;
+        position: absolute;
+        stroke: $color-text-muted;
+        stroke-linecap: round;
+        stroke-width: 1.8;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 16px;
+    }
+}
+
+.c-search__input {
+    @include font-size(1.5);
+    background-color: $color-surface-muted;
+    border: 1px solid $color-border;
+    border-radius: $radius-pill;
+    color: $color-black;
+    font-family: inherit;
+    padding: $unit*0.9 $unit*1.4 $unit*0.9 $unit*3.6;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+    width: 100%;
+
+    &:focus-visible {
+        background-color: $color-surface;
+        border-color: $color-brand-primary;
+        box-shadow: 0 0 0 3px rgba($color-brand-primary, 0.2);
+        outline: none;
+    }
+}
+
+.c-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: $unit*1.2;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.c-tabs__tab {
+    @include font-size(1.4);
+    align-items: center;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: $radius-pill;
+    color: $color-text-muted;
+    cursor: pointer;
+    display: inline-flex;
+    flex-shrink: 0;
+    font-family: inherit;
+    font-weight: 500;
+    gap: 6px;
+    padding: $unit*0.7 $unit*1.4;
+    transition: background-color 0.2s, color 0.2s;
+
+    &:hover {
+        background-color: $color-surface-muted;
+        color: $color-black;
+    }
+
+    &[aria-selected="true"] {
+        background-color: $color-black;
+        color: $color-white;
+
+        .c-tabs__count {
+            background-color: rgba($color-white, 0.2);
+            color: $color-white;
+        }
+    }
+}
+
+.c-tabs__count {
+    @include font-size(1.2);
+    background-color: $color-surface-sunken;
+    border-radius: $radius-pill;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    padding: 1px 7px;
+}
+
+// 1
+.c-detail__moves-panel {
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.c-detail__moves-table {
+    @include font-size(1.5);
+    border-collapse: collapse;
+    width: 100%;
+
+    th {
+        @include font-size(1.2);
+        background-color: $color-surface;
+        border-bottom: 1px solid $color-border;
+        color: $color-text-muted;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        padding: $unit $unit*1.6;
+        position: sticky;
+        text-align: left;
+        text-transform: uppercase;
+        top: 0;
+    }
+
+    th:first-child {
+        width: 90px;
+    }
+
+    td {
+        padding: $unit*0.9 $unit*1.6;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: $color-surface-muted;
+    }
+}
+
+.c-detail__move-level {
+    color: $color-text-muted;
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+}
+
+.c-detail__moves-list {
+    @include font-size(1.5);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+
+    li {
+        border-bottom: 1px solid $color-border;
+        padding: $unit*0.9 $unit*1.6;
+    }
+}
+
+.c-detail__moves-empty {
+    color: $color-text-muted;
+    padding: $unit*3;
+    text-align: center;
+}
+
+
+// Pager
+// -----------------------------------------------------------------------------
+
+.c-pager {
+    display: grid;
+    gap: $unit*1.5;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: $unit*3;
+}
+
+.c-pager__link {
+    align-items: center;
+    background-color: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-sm;
+    color: $color-black;
+    display: flex;
+    gap: $unit;
+    min-width: 0;
+    padding: $unit $unit*1.4;
+    text-decoration: none;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s $ease-out;
+
+    img {
+        flex-shrink: 0;
+        image-rendering: pixelated;
+    }
+
+    &:hover {
+        border-color: $color-brand-primary;
+        box-shadow: $shadow-md;
+    }
+}
+
+.c-pager__link--next {
+    flex-direction: row-reverse;
+    grid-column: 2;
+    text-align: right;
+}
+
+.c-pager__arrow {
+    fill: none;
+    flex-shrink: 0;
+    height: 18px;
+    stroke: $color-text-muted;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+    width: 18px;
+}
+
+.c-pager__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.c-pager__label {
+    @include font-size(1.2);
+    color: $color-text-muted;
+    font-variant-numeric: tabular-nums;
+}
+
+.c-pager__name {
+    @include font-size(1.6);
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.c-detail__moves-version {
+    @include font-size(1.3);
+    color: $color-text-muted;
+    margin-top: 2px;
+}
+
+
+// Cry Button
+// -----------------------------------------------------------------------------
+//
+// Purpose: Shows that the cry is loading / playing, or that audio failed
+//
+// -----------------------------------------------------------------------------
+
+.c-cry {
+    &.is-loading {
+        cursor: progress;
+    }
+
+    &.is-playing {
+        background-color: $color-brand-secondary;
+        border-color: $color-brand-secondary;
+        color: #1d2330;
+
+        .c-cry__wave {
+            animation: c-cry-wave 0.9s ease-in-out infinite;
+        }
+
+        .c-cry__wave--2 {
+            animation-delay: 0.15s;
+        }
+    }
+
+    &.is-error {
+        border-color: rgba(#ff8a8a, 0.8);
+        color: #ffb3b3;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &.is-playing .c-cry__wave {
+            animation: none;
+        }
+    }
+}
+
+@keyframes c-cry-wave {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+}

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import ListingItem from './ListingItem'
+import "../../resources/sass/components/_components.listing.scss"
 import "../../resources/sass/components/_components.profile.scss"
 import { collection, getDocs } from "firebase/firestore";
 
-import { db } from "../../resources/js/firebase/firebase"
+import { db, signInWithGoogle } from "../../resources/js/firebase/firebase"
 
 import { useSelector } from 'react-redux'
 import { selectUser } from "../../resources/js/redux/userSlice"
 
-function Profile(c) {
+function Profile() {
     const { uid, status } = useSelector(selectUser)
 
     const [favourites, setFavourites] = useState([])
@@ -42,25 +44,44 @@ function Profile(c) {
         return () => { ignore = true }
     }, [uid])
 
-    const title = status === "loading"
-        ? "Loading…"
-        : uid ? "My Favourite Pokemon" : "Please login to view"
+    let content
+
+    if (status === "loading" || isLoading) {
+        content = <p className="c-profile__message" aria-live="polite">Loading…</p>
+    } else if (!uid) {
+        content = (
+            <div className="c-profile__panel">
+                <h2 className="c-profile__title">Sign in to see your favourites</h2>
+                <p className="c-profile__text">Save Pokémon from their detail pages and they'll appear here.</p>
+                <button type="button" className="c-btn c-btn--primary" onClick={() => signInWithGoogle().catch(() => {})}>
+                    Sign in with Google
+                </button>
+            </div>
+        )
+    } else if (error) {
+        content = <p className="c-profile__message" role="alert">Sorry, we couldn't load your favourites.</p>
+    } else if (favourites.length === 0) {
+        content = (
+            <div className="c-profile__panel">
+                <h2 className="c-profile__title">No favourites yet</h2>
+                <p className="c-profile__text">Open any Pokémon and choose “Add to Favourites” to save it here.</p>
+                <Link to="/" className="c-btn c-btn--primary">Browse Pokémon</Link>
+            </div>
+        )
+    } else {
+        content = (
+            <ul className="c-listing__grid">
+                {favourites.map(favourite => (
+                    <ListingItem key={favourite.name} name={favourite.name} id={favourite.id} />
+                ))}
+            </ul>
+        )
+    }
 
     return (
-        <div className={`c-profile ${c.class ? c.class : "" }`}>
-            <div className="container">
-                <div className="row">
-                    <h1 className="c-profile__title">{title}</h1>
-                </div>
-                <div className="row" aria-busy={isLoading}>
-                    {error && <p role="alert">Sorry, we couldn't load your favourites.</p>}
-                    {uid && !isLoading && !error && favourites.length === 0 && <p>You haven't added any favourites yet.</p>}
-                    {favourites.map(favourite => (
-                        <ListingItem key={favourite.name} title={favourite.name} image={favourite.id} />
-                    ))}
-                </div>
-            </div>
-        </div>
+        <section className="c-profile">
+            <div className="container">{content}</div>
+        </section>
     )
 }
 

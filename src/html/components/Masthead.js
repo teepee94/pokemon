@@ -1,17 +1,17 @@
 import React from 'react'
 import "../../resources/sass/components/_components.masthead.scss"
 
-function Masthead(c) {
+function Masthead({ title, summary, eyebrow }) {
     return (
-        <div className={`c-masthead ${c.class ? c.class : "" }`}>
+        <header className="c-masthead">
             <div className="container">
-                <div className="row">
-                    <div className="c-masthead__title-container">
-                        <h1 className="c-masthead__title">{c.title}</h1>
-                    </div>
+                <div className="c-masthead__inner">
+                    {eyebrow && <p className="c-masthead__eyebrow">{eyebrow}</p>}
+                    <h1 className="c-masthead__title">{title}</h1>
+                    {summary && <p className="c-masthead__summary">{summary}</p>}
                 </div>
             </div>
-        </div>
+        </header>
     )
 }
 

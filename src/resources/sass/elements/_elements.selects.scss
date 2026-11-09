@@ -25,34 +25,28 @@
         fill: $color-form-input-text;
         height: $unit*1.5;
         pointer-events: none;
-        right: $unit;
-        width: $unit*1.5;
-
-        @include media-breakpoint-up(lg) {
-            right: $unit*2;
-        }
+        right: $unit*1.4;
+        width: $unit*1.2;
     }
 }
 
 .c-selectbox__select {
-    @include para;
+    @include font-size(1.5);
     appearance: none;
-    background-color: $color-form-input-bg;
-    border: none;
-    border-bottom: 1px solid $color-form-input-border;
-    border-radius: 0;
+    background-color: $color-surface;
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    box-shadow: $shadow-sm;
     color: $color-form-input-text;
     cursor: pointer;
-    line-height: 110%;
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.2;
     outline: none;
-    padding: $unit*1.5 $unit*4 $unit*1.5 $unit;
+    padding: $unit*1.2 $unit*4 $unit*1.2 $unit*1.4;
     position: relative;
-    transition: border 0.3s;
+    transition: border-color 0.2s, box-shadow 0.2s;
     width: 100%;
-
-    @include media-breakpoint-up(lg) {
-        padding: $unit*2 $unit*5 $unit*2 $unit*2;
-    }
 
     &::-ms-expand {
         display: none;
@@ -63,14 +57,14 @@
         border-color: $color-form-validation-border-error;
     }
 
-    // 3
-    &:valid {
-        border-color: $color-form-validation-border-success;
+    // 4
+    &:hover {
+        border-color: $color-grey;
     }
 
-    // 4
-    @include hocus {
-        border-color: $color-form-input-focus !important;
+    &:focus-visible {
+        border-color: $color-brand-primary;
+        box-shadow: 0 0 0 3px rgba($color-brand-primary, 0.2);
     }
 
     option {

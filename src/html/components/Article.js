@@ -1,179 +1,62 @@
-import React, { useState, useEffect } from 'react'
-import { useParams } from "react-router-dom";
-import "../../resources/sass/components/_components.article.scss"
-import axios, { isCancel } from "../../resources/js/api/Axios"
-import requests from '../../resources/js/api/Requests'
+import React from 'react'
+import { Link, useParams } from "react-router-dom";
+import "../../resources/sass/components/_components.detail.scss"
+import { usePokemonDetail } from '../../resources/js/api/usePokemonDetail'
+import { formatName } from "../../resources/js/utils/format"
 import Masthead from "./Masthead"
-import { doc, setDoc } from "firebase/firestore";
-import { useSelector } from 'react-redux'
-import { db } from "../../resources/js/firebase/firebase"
-import { selectUser } from "../../resources/js/redux/userSlice"
+import DetailHero from './detail/DetailHero'
+import DetailStats from './detail/DetailStats'
+import DetailAbout from './detail/DetailAbout'
+import DetailMoves from './detail/DetailMoves'
+import DetailPager from './detail/DetailPager'
 
-const FAVOURITE_LABELS = {
-    idle: "Add to Favourites",
-    saving: "Saving…",
-    saved: "Added to Favourites",
-    error: "Couldn't save, try again",
-}
-
-function Article(c) {
+function Article() {
     const { name } = useParams();
-    const user = useSelector(selectUser)
+    const { pokemon, species, neighbours, error } = usePokemonDetail(name)
 
-    const [articleData, setArticleData] = useState(null);
-    const [error, setError] = useState(null);
-    const [favouriteStatus, setFavouriteStatus] = useState("idle");
-
-    useEffect(() => {
-        const controller = new AbortController()
-
-        // Clear the previous pokemon so its data never shows under a new name.
-        setArticleData(null)
-        setError(null)
-        setFavouriteStatus("idle")
-
-        axios.get(`${requests.pokemon}/${encodeURIComponent(name)}`, { signal: controller.signal })
-            .then(response => setArticleData(response.data))
-            .catch(err => {
-                if (!isCancel(err)) setError(err)
-            })
-
-        return () => controller.abort()
-    }, [name])
-
-    const addToFavourites = async () => {
-        if (!user.uid) {
-            alert("Please sign in")
-            return
-        }
-
-        setFavouriteStatus("saving")
-
-        try {
-            // Key the document on the name the API returned, not the raw URL
-            // param, so only real pokemon can be saved.
-            await setDoc(doc(db, "pokemon", user.uid, "favourites", articleData.name), {
-                id: articleData.id
-            })
-            setFavouriteStatus("saved")
-        } catch (err) {
-            console.error(err)
-            setFavouriteStatus("error")
-        }
-    }
-
-    if (error || !articleData) {
-        const isNotFound = error?.response?.status === 404
+    if (error) {
+        const isNotFound = error.response?.status === 404
 
         return (
             <>
-            <Masthead title={name} />
-            <div className={`c-article ${c.class ? c.class : "" }`}>
-                <div className="container">
-                    <div className="row">
-                        {error
-                            ? <p role="alert">{isNotFound ? "We couldn't find that Pokémon." : "Sorry, something went wrong loading this Pokémon."}</p>
-                            : <p aria-live="polite">Loading…</p>}
-                    </div>
+            <Masthead eyebrow="Pokédex" title={isNotFound ? "Pokémon not found" : "Something went wrong"} />
+            <div className="container">
+                <div className="c-panel c-detail__message" role="alert">
+                    <p>
+                        {isNotFound
+                            ? <>We couldn't find a Pokémon called “{name}”.</>
+                            : "We couldn't load this Pokémon. Please check your connection and try again."}
+                    </p>
+                    <Link to="/" className="c-btn c-btn--primary">Back to the Pokédex</Link>
                 </div>
             </div>
             </>
         )
     }
 
+    if (!pokemon) {
+        return (
+            <div className="c-detail is-loading" aria-busy="true">
+                <Masthead eyebrow="Pokédex" title={formatName(name)} summary="Loading…" />
+            </div>
+        )
+    }
+
+    const primaryType = pokemon.types[0]?.type.name
+
+    // The type class themes the hero glow and stat bars via --type-color.
     return (
-        <>
-        <Masthead title={articleData.name} />
-        <div className={`c-article ${c.class ? c.class : "" }`}>
-            <div className="container">
-                <div className="row">
-                    <div className="c-article__btn-container">
-                        <button
-                            onClick={addToFavourites}
-                            disabled={favouriteStatus === "saving" || favouriteStatus === "saved"}
-                            className="c-article__btn c-btn"
-                        >
-                            {FAVOURITE_LABELS[favouriteStatus]}
-                        </button>
-                    </div>
+        <div className={`c-detail c-detail--${primaryType}`}>
+            <DetailHero pokemon={pokemon} species={species} />
+            <div className="container c-detail__body">
+                <div className="c-detail__grid">
+                    <DetailStats pokemon={pokemon} />
+                    <DetailAbout pokemon={pokemon} species={species} />
+                    <DetailMoves key={pokemon.name} pokemon={pokemon} />
                 </div>
-                <div className="row">
-                    <div className="c-article__content">
-                        <div className="c-article__content-wrapper">
-                            <h2>Moves</h2>
-                            <ul>
-                                {articleData.moves.map(item => (
-                                    <li key={item.move.name}>{item.move.name}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-                    <div className="c-article__content">
-                        <div className="row">
-                            <div className="c-article__content-section">
-                                <div className="c-article__content-wrapper">
-                                    <h2>Image</h2>
-                                    <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${articleData.id}.png`} alt={articleData.name} />
-                                </div>
-                            </div>
-                            <div className="c-article__content-section">
-                                <div className="c-article__content-wrapper">
-                                    <h2>Weight</h2>
-                                    <p>{articleData.weight}</p>
-                                </div>
-                            </div>
-                            <div className="c-article__content-section">
-                                <div className="c-article__content-wrapper">
-                                    <h2>Experience</h2>
-                                    <p>{articleData.base_experience}</p>
-                                </div>
-                            </div>
-                            <div className="c-article__content-section">
-                                <div className="c-article__content-wrapper">
-                                    <h2>Abilities</h2>
-                                    <ul>
-                                        {articleData.abilities.map(item => (
-                                            <li key={item.ability.name}>{item.ability.name}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="c-article__content-section">
-                                <div className="c-article__content-wrapper">
-                                    <h2>Height</h2>
-                                    <p>{articleData.height}</p>
-                                </div>
-                            </div>
-                            <div className="c-article__content-section">
-                                <div className="c-article__content-wrapper">
-                                    <h2>Stats</h2>
-                                    <ul>
-                                        {articleData.stats.map(item => (
-                                            <li key={item.stat.name}>
-                                                <p>{item.stat.name}: {item.base_stat}. Effort: {item.effort}</p>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="c-article__content-section">
-                                <div className="c-article__content-wrapper">
-                                    <h2>Types</h2>
-                                    <ul>
-                                        {articleData.types.map(item => (
-                                            <li key={item.type.name}>
-                                                <p>{item.type.name}</p>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <DetailPager prev={neighbours.prev} next={neighbours.next} />
             </div>
         </div>
-        </>
     )
 }
 

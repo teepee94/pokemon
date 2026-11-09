@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../../resources/sass/components/_components.navbar.scss"
 import { auth, signInWithGoogle } from '../../resources/js/firebase/firebase';
 import { selectUser } from "../../resources/js/redux/userSlice"
+import { selectCompare } from "../../resources/js/redux/compareSlice"
+
+const navLinkClass = ({ isActive }) => `c-navbar__link${isActive ? " is-active" : ""}`
 
 function Navbar() {
 	const user = useSelector(selectUser)
+	const compareCount = useSelector(selectCompare).length
 	const [isSticky, setIsSticky] = useState(false)
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -55,13 +59,20 @@ function Navbar() {
 						<div className="c-navbar__links" id="js-navbar-links">
 							<ul className="c-navbar__list">
 								<li className="c-navbar__item">
-									<Link to="/" className="c-navbar__link">All Pokemon</Link>
+									<NavLink to="/" end className={navLinkClass}>Pokédex</NavLink>
 								</li>
 								<li className="c-navbar__item">
-									<Link to="/compare" className="c-navbar__link">Compare</Link>
+									<NavLink to="/compare" className={navLinkClass}>
+										Compare
+										{compareCount > 0 && (
+											<span className="c-navbar__badge">
+												{compareCount}<span className="u-visually-hide"> selected</span>
+											</span>
+										)}
+									</NavLink>
 								</li>
 								<li className="c-navbar__item">
-									<Link to="/account" className="c-navbar__link">My Favourites</Link>
+									<NavLink to="/account" className={navLinkClass}>My Favourites</NavLink>
 								</li>
 								<li className="c-navbar__item">
 									<button
